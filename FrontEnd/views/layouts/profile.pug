@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+
+    .card.card-profile
+        img.card-img-top(src='../../assets/img/banner.png' alt='Image placeholder')
+        .row.justify-content-center
+            .col-lg-3.order-lg-2
+                .card-profile-image
+                    a(href='/profile/'+user._id)
+                        if (foto!="")
+                            img.rounded-circle(src=user.foto)
+                        else
+                            img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
+        .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4
+            .d-flex.justify-content-between
+                a.btn.btn-sm.btn-info.mr-4(href='http://localhost:5004/users/'+user._id+'/editProfile') Editar perfil
+                a.btn.btn-sm.btn-default.float-right(href='#') Mensagens
+        .card-body.pt-0
+            .row(style="padding-top:60px")
+                .col
+                    .card-profile-stats.d-flex.justify-content-center
+                        div
+                            span.heading=user.friends.length
+                            span.description Amigos
+                        div
+                            span.heading=nrGrupos
+                            span.description Grupos
+            .text-center
+                h5.h3=user.name
+                    span.font-weight-light=user.dateBirth
+                .h5.font-weight-300
+                    i.ni.location_pin.mr-2=user.bio

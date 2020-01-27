@@ -1,0 +1,11 @@
+extends layout
+block content
+    if owner.name=="pp"
+        h3 Agenda de Eventos: Login
+    else
+        h3 Agenda de Eventos: RIP
+    form(action="/criaGrupo" method="POST")
+        input(type="text" name="name")
+        input(type="text" name="bio")
+        input(type="submit" value="Enviar")
+

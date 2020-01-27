@@ -1,0 +1,12 @@
+extends layout
+block content
+  table(border="1")
+    tr
+      th Name
+      th Opcao
+    each e in ents
+      tr
+        td= e.name
+        td
+            form(action=('/removeMember/' + dado._id + '/membro/'+ e._id) method="POST")
+                input(type="submit" value="Apagar")

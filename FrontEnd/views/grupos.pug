@@ -1,0 +1,94 @@
+extends layout
+
+block content
+    .sidebar-navigation.hidde-sm
+          p.text-gray.font-weight-bold.text-uppercase.px-3.small.pb-4.mb-0 Menu
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.rect
+                  span.circle
+                  |                             Home
+              li
+                a(href='/groups')
+                  span.rect
+                  span.circle
+                  |                             Groups
+              li
+                a(href='#projects')
+                  span.rect
+                  span.circle
+                  |                             Recent Work
+              li
+                a(href='#video')
+                  span.rect
+                  span.circle
+                  |                             Presentation
+              li
+                a(href='#blog')
+                  span.rect
+                  span.circle
+                  |                             Blog Entires
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(src='assets/vendor/nucleo/fonts/ic_inbox_24px.svg')
+            span.glyphicon.glyphicon-user
+              |  Avatar
+        li
+          a(href='#')
+            span.glyphicon.glyphicon-log-in
+              |  Login
+
+    .titulo
+        h2 amaze me pls
+
+    .page-content
+        button.w3-btn.w3-round-large(onclick="window.location.href = '/register'") Registar utilizador
+        button.w3-btn.w3-round-large(onclick="window.location.href = '/logout'") Logout
+        h1 Agenda de Eventos
+        table(border="1")
+          tr
+            th Name
+            th Owner
+            th Bio
+            th Users
+          each e in lista
+              if (e.users.includes(user._id))
+                  tr
+                      td
+                          a(href='http://localhost:5004/groups/' + e._id)= e.name
+                      td= e.owner
+                      td= e.bio
+                      td= e.users.length
+              else
+                  if (e.visible)
+                      tr
+                          if (!e.needRequest)
+                              td
+                                  a(href='http://localhost:5004/groups/' + e._id)= e.name
+                          else
+                              td= e.name
+                                  form(action=('http://localhost:5004/groups/' + e._id + '/request?member=' + user._id ) method="POST")
+                                      input(type="submit" value="Pedir para Entrar")
+                          td= e.owner
+                          td= e.bio
+                          td= e.users.length
+
+
+        a(href='http://localhost:5004/criaGrupo') Criar Grupo
+
+
+
+
+          //   if (e.users.includes)
+        //           if (1==2)
+        //               td
+        //                   a(href='http://localhost:5004/groups/' + e._id)= e.name
+        //           else
+        //               td NOICE
+        //       else
+        //           td= e.name
+        //               form(action=('http://localhost:5004/groups/' + idG + '/topics/' + idT + '/likePost/' + e._id + '?user=' +  user._id ) method="POST")
+        //                   input(type="submit" value="Like")

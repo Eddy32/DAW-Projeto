@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <font id="Nucleo" horiz-adv-x="256">
+    <font-face font-family="Nucleo"
+      units-per-em="256" ascent="256"
+      descent="0" />
+    <missing-glyph horiz-adv-x="0" />
+    <glyph glyph-name="ic_inbox_24px"
+      unicode="&#xEA01;"
+      horiz-adv-x="256" d="M202.6666666666667 224H53.2266666666667C41.3866666666667 224 32.1066666666667 214.5066666666667 32.1066666666667 202.6666666666667L32 53.3333333333333C32 41.6 41.3866666666667 32 53.2266666666667 32H202.6666666666667C214.4 32 224 41.6 224 53.3333333333333V202.6666666666667C224 214.5066666666667 214.4 224 202.6666666666667 224zM202.6666666666667 96H160C160 78.2933333333334 145.6 64 128 64S96 78.2933333333333 96 96H53.2266666666667V202.6666666666667H202.6666666666667V96z" />
+  </font>
+</defs>
+</svg>

@@ -1,0 +1,414 @@
+var express = require('express');
+var router = express.Router();
+var axios = require('axios')
+var passport = require('passport')
+var bcrypt = require('bcryptjs')
+
+////////////////Rotas que nao necessitam de autenticação
+//Get's
+router.get('/login', function(req,res){
+  res.render('layouts/loginForm')
+  })
+  
+router.get('/register', function(req,res){
+    res.render('layouts/registerForm')
+  })
+
+//POST
+router.post('/login', passport.authenticate('local', 
+{ successRedirect: '/feed',
+  successFlash: 'Utilizador autenticado com sucesso!',
+  failureRedirect: '/login',
+  failureFlash: 'Utilizador ou password inválido(s)...'
+})
+)
+
+router.post('/reg', function(req,res){
+var hash = bcrypt.hashSync(req.body.password, 10);
+axios.post('http://localhost:5003/utilizadores', {
+ 
+  email: req.body.email,
+  name: req.body.name,
+  password: hash
+})
+  .then(dados => res.redirect('/'))
+  .catch(e => res.render('error', {error: e}))
+})
+
+////////////////Rotas que necessitam de autenticação 
+
+//------------------------------------------------------------------Get's
+//Operaçoes do Sistema base
+router.get('/', verificaAutenticacao, function(req, res) {
+  res.redirect('/login')
+});
+
+//Operaçoes do Sistema base
+router.get('/groups', verificaAutenticacao, function(req, res) {
+  axios.get('http://localhost:5003/groups/' )
+    .then(dados => res.render('layouts/groups', {lista: dados.data, user: req.user}))
+    .catch(e => res.render('error', {error: e}))
+});
+
+router.get('/credits', verificaAutenticacao, function(req, res) {
+  res.render('layouts/credits')
+});
+
+router.get('/profile', function(req, res){
+  res.render('layouts/profile', {user: req.user, nrGrupos:"4"}); //mudar o nrGrupos
+  /*
+  axios.get('http://localhost:5003/user/'+req.params.id)
+       .then(dados => res.render('layouts/profile', {nome: "Inês", dataAniv:"2 de nov", foto:"", nrFriends: "2", nrGrupos:"4", bio:"bio"}))
+       .catch(e => res.render('error', {error: e}))*/
+})
+
+router.get('/users/:idU/editProfile', verificaAutenticacao, function(req, res){
+  console.log("mipeeee")
+  axios.get('http://localhost:5003/utilizadores/byID/'+ req.params.idU)
+       .then(dados => res.render('layouts/editProfile', {user:req.user}))
+   //acho que é preciso fazer um post para isto
+})
+
+
+
+
+
+// Grupo de um determinado tópico (not sure disto)
+router.get('/group/:topic', verificaAutenticacao, function(req, res){
+  axios.get('http://localhost:5003/group/'+req.params.topic)
+      .then(dados => res.render('layouts/group', {lista:dados.data, hashtags:["tag1", "tag2", "tag3"], posts:[{title:"post1", text:"text1"}, {title:"post2", text:"text2"}],coisa:"bio", foto:req.user.foto, nome:req.user.name, hora:new Date().getMinutes()}))
+      .catch(erro => res.render('error', {error:erro}))
+})
+
+router.get('/post/:id', verificaAutenticacao, function(req,res){
+  axios.get('http://localhost:5003/posts/'+req.params.id)
+      .then(dados => res.render('layouts/singlePost', {lista: dados.data, comentarios:["comment1", "comment2"], foto:req.user.foto, dono:req.user.name, hora: new Date().getMinutes()}))
+      .catch(e => res.render('error', {error: e}))
+  })
+
+
+router.get('/eventos/:id', verificaAutenticacao, function(req,res){
+axios.get('http://localhost:5003/eventos/' + req.params.id)
+    .then(dados => res.render('evento', {evento: dados.data}))
+    .catch(e => res.render('error', {error: e}))
+})
+
+router.get('/logout', verificaAutenticacao, function(req,res){
+req.logout()
+res.redirect('/login')
+})
+
+router.get('/feed',verificaAutenticacao, function(req,res){
+  res.render('mainpage')
+})
+
+/////Grupos
+///Ve os grupos
+router.get('/groupsteste',verificaAutenticacao, function(req, res){
+  axios.get('http://localhost:5003/groups/' )
+    .then(dados => res.render('grupos', {lista: dados.data, user: req.user}))
+    .catch(e => res.render('error', {error: e}))
+  //res.render('layouts/groups')
+})
+
+//pagina para criar grupo
+router.get('/criaGrupo',verificaAutenticacao, function(req, res){
+  res.render('criaGrupo',{owner: req.user})
+})
+
+//topicos de um grupo e os seus users
+router.get('/groups/:id',verificaAutenticacao, function(req, res){
+  console.log("\n\n\n\n\n///////////////////////" + req.params)
+  axios.get('http://localhost:5003/groups/'+ req.params.id)
+    .then(grupo => {
+      console.log("\n\n\n\n\n///////////////////////" + req.params),
+      axios.get('http://localhost:5003/utilizadores/multiple?array='+ grupo.data.users)
+        .then(membros => {
+          console.log("\n\n\n\n\n/---------//////////////" + req.params),
+          axios.get('http://localhost:5003/topics/'+req.params.id )
+            .then(dados => {
+              if(grupo.data.pendent.length>0){
+                axios.get('http://localhost:5003/utilizadores/multiple?array='+ grupo.data.pendent)
+                  .then(penden => {
+                    console.log("LALA: " + penden.data.toString())
+                    if(grupo.data.users.includes(req.user._id)){
+                      console.log("FAZES PARTE: " + req.user._id + "No grupo: " + grupo.data._id)
+                      res.render('topics', {lista: dados.data,members: membros.data,user: req.user,group: grupo.data,pendentes: penden.data})
+                    }else
+                    res.redirect('/groups')
+                      
+                  })
+                  .catch(erro => {
+                    res.render('error',{error: erro})
+                  })
+              }
+              else 
+                if(grupo.data.users.includes(req.user._id)){
+                  console.log("FAZES PARTE: " + req.user._id + "No grupo: " + grupo.data._id)
+                  res.render('topics', {lista: dados.data,members: membros.data,user: req.user,group: grupo.data,pendentes: []})
+                }else
+                res.redirect('/groups')
+
+
+
+            })
+            .catch(erro => {
+              res.render('error',{error: erro})
+            })
+        })
+        .catch(erro => {
+          res.render('error',{error: erro})
+        })
+    })
+    .catch(erro => {
+      res.render('error',{error: erro})
+    })
+})
+
+
+//ver membros pendentes de um grupo
+router.get('/group/:id/viewPendent', verificaAutenticacao, function(req,res){
+  axios.get('http://localhost:5003/groups/'+ req.params.id)
+    .then(dados => {
+      if(dados.data.pendent.length>0){
+      console.log("USERS PENDENTES: " + dados.data.pendent.length)
+      axios.get('http://localhost:5003/utilizadores/multiple?array='+ dados.data.pendent)
+        .then(membros => {
+          res.render('showMembers', { dado: dados.data, ents: membros.data, user:req.user })
+        })
+        .catch(erro => {
+          res.render('error',{error: erro})
+        })
+      }
+      else res.render('showMembers', { dado: dados.data, ents: [], user:req.user })
+
+    })
+    .catch(erro => {
+      res.render('error',{error: erro})
+    })
+})
+
+//remover um membro a um grupo
+router.get('/removeMember/:id', verificaAutenticacao, function(req,res){
+  axios.get('http://localhost:5003/groups/'+ req.params.id)
+    .then(dados => {
+      axios.get('http://localhost:5003/utilizadores/multiple?array='+ dados.data.users)
+        .then(membros => {
+          res.render('removeMember', { dado: dados.data, ents: membros.data })
+        })
+        .catch(erro => {
+          res.render('error',{error: erro})
+        })
+    })
+    .catch(erro => {
+      res.render('error',{error: erro})
+    })
+})
+
+
+/*
+router.get('/groups2/:id', function(req, res){
+  axios.get('http://localhost:5003/groups/'+ req.params.id)
+    .then(dados => {
+      axios.get('http://localhost:5003/utilizadores/multiple?array='+ dados.data.users)
+        .then(membros => {
+          res.render('grupos2', { dado: dados.data, ents: membros.data })
+        })
+        .catch(erro => {
+          res.render('error',{error: erro})
+        })
+    })
+    .catch(erro => {
+      res.render('error',{error: erro})
+    })
+  //res.render('layouts/groups')
+})
+*/
+
+
+
+
+router.get('/groups/:idG/topic/:idT',verificaAutenticacao, function(req, res){
+   var nameTopic = req.query.nmT;
+   axios.get('http://localhost:5003/posts/byTopic/' + req.params.idT )
+        .then(dados => res.render('layouts/posts', {lista: dados.data, idG:req.params.idG, nameTopico: nameTopic, idT: req.params.idT,user:req.user}))
+        .catch(e => res.render('error', {error: e})) 
+    //res.render('layouts/groups') 
+  })
+
+
+router.get('/addPost', verificaAutenticacao, function(req, res){
+  res.render('layouts/createPost')
+})
+
+//------------------------------------------------------------------Post's
+//autenticar no sistema
+router.post('/login', passport.authenticate('local', 
+{ successRedirect: '/feed',
+  successFlash: 'Utilizador autenticado com sucesso!',
+  failureRedirect: '/login',
+  failureFlash: 'Utilizador ou password inválido(s)...'
+})
+)
+
+//registar utilizador
+router.post('/reg', function(req,res){
+var hash = bcrypt.hashSync(req.body.password, 10);
+axios.post('http://localhost:5003/utilizadores', {
+ 
+  email: req.body.email,
+  name: req.body.name,
+  password: hash
+})
+  .then(dados => res.redirect('/'))
+  .catch(e => res.render('error', {error: e}))
+})
+
+////Grupos
+//remover um user de um grupo
+router.post('/removeMember/:id/membro/:idM', function(req,res){
+  axios.post('http://localhost:5003/groups/' + req.params.id + '/rmMember?membro=' + req.params.idM)
+    .then(dados => res.redirect('/groups/'+req.params.id))
+    .catch(e => res.render('error', {error: e}))
+})
+
+//user adicionar se a um grupo
+router.post('/addMember/:id/membro/:idM', function(req,res){
+  axios.post('http://localhost:5003/groups/' + req.params.id + '/addMember?membro=' + req.params.idM)
+    .then(dados => res.redirect('/groups/'+req.params.id))
+    .catch(e => res.render('error', {error: e}))
+})
+
+//criar um grupo
+router.post('/criaGrupo', function(req,res){
+  axios.post('http://localhost:5003/groups', {
+   
+    owner: req.user._id,
+    name: req.body.name,
+    bio: req.body.bio,
+    visible: req.body.visible,
+    needRequest: req.body.needRequest
+  })
+    .then(dados => res.redirect('/groups'))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//criaPost  
+router.post('/criaTopico/:idG', function(req,res){
+
+  axios.post('http://localhost:5003/topics', {
+    
+    creator: req.user._id,
+    title: req.body.title,
+    idGrupo: req.params.idG
+  })
+    .then(dados => res.redirect('/groups/' + req.params.idG))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//criar um topico
+router.post('/criaGrupo', function(req,res){
+  axios.post('http://localhost:5003/groups', {
+   
+    owner: req.user._id,
+    name: req.body.name,
+    bio: req.body.bio
+  })
+    .then(dados => res.redirect('/groups'))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+
+router.post('/addPost', function(req,res){
+  axios.post('http://localhost:5003/posts', {
+   title: req.body.title,
+   text: req.body.message,
+   owner: req.user._id
+  })
+    .then(dados => res.redirect('/'))
+    .catch(e => res.render('error', {error: e}))
+})
+
+router.post('/addComment', function(req,res){
+  console.log("não chega aquiiiii :(")
+  axios.post('http://localhost:5003/posts/'+req.body._id+'/addComment', {
+   owner: req.user._id,
+   comments: req.body.comment
+  })
+    .then(dados => res.redirect(''))
+    .catch(e => res.render('error', {error: e}))
+})
+
+
+//add/rm likes num post
+router.post('/groups/:idG/topics/:idT/likePost/:idP', function(req,res){
+  var user = req.query.user;
+  axios.post('http://localhost:5003/posts/' + req.params.idP + '/like/' + user)
+    .then(dados => res.redirect('/groups/'+req.params.idG+'/topic/'+req.params.idT))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+
+//remove topico
+router.post('/groups/:idG/rmTopic/:idT', function(req,res){
+  var user = req.query.user;
+  axios.post('http://localhost:5003/topics/' + req.params.idT + '/remove')
+    .then(dados => res.redirect('/groups/'+req.params.idG))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//adiciona pedido para entrar num grupo
+router.post('/groups/:idG/request', function(req,res){
+  var user = req.query.member;
+  axios.post('http://localhost:5003/groups/' + req.params.idG + '/addRequest?membro=' + user )
+    .then(dados => res.redirect('/groups'))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//aceita pedido para entrar num grupo
+router.post('/groups/:idG/acceptMember', function(req,res){
+  var user = req.query.member;
+  axios.post('http://localhost:5003/groups/' + req.params.idG + '/accpetRequest?membro=' + user )
+    .then(dados => res.redirect('/groups/'+req.params.idG ))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//rejeita pedido para entrar num grupo
+router.post('/groups/:idG/denyMember', function(req,res){
+  var user = req.query.member;
+  axios.post('http://localhost:5003/groups/' + req.params.idG + '/denyRequest?membro=' + user )
+    .then(dados => res.redirect('/groups/'+req.params.idG ))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//promote to admin
+router.post('/groups/:idG/promoteAdmin/:idU', function(req,res){
+  axios.post('http://localhost:5003/groups/' + req.params.idG + '/addAdmin/' + req.params.idU )
+    .then(dados => res.redirect('/groups/'+req.params.idG ))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+
+//demote to admin
+router.post('/groups/:idG/demoteAdmin/:idU', function(req,res){
+  axios.post('http://localhost:5003/groups/' + req.params.idG + '/rmAdmin/' + req.params.idU  )
+    .then(dados => res.redirect('/groups/'+req.params.idG ))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+
+  
+
+
+
+//função de autenticação no sistema  
+function verificaAutenticacao(req,res,next){
+  console.log("\n\n\n\n\nTESTEI AUTENTICAÇAO")
+if(req.isAuthenticated()){
+//req.isAuthenticated() will return true if user is logged in
+  next();
+} else{
+  res.redirect("/login");}
+}
+
+module.exports = router;

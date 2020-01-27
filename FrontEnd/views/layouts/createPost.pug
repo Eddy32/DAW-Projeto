@@ -1,0 +1,36 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Add Post
+
+    link(rel='stylesheet' type='text/css' href='assets/vendor/animate/animate.css')
+
+    link(rel='icon' type='image/png' href='img/icons/favicon.ico')
+    link(rel='stylesheet' type='text/css' href='assets/fonts/material-icon/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+
+    link(rel='stylesheet' type='text/css' href='css/criarPost/util.css')
+    link(rel='stylesheet' type='text/css' href='css/criarPost/main.css')
+
+body
+.container-contact100
+  .wrap-contact100
+    .contact100-pic.js-tilt(data-tilt='')
+      img(src='img/img-01.png' alt='IMG')
+    form.contact100-form.validate-form(action="/addPost" method='POST')
+      span.contact100-form-title
+        | Add Post
+      .wrap-input100.validate-input(data-validate='Name is required')
+        input.input100(type='text' name='title' placeholder='Title')
+        span.focus-input100
+
+      .wrap-input100.validate-input(data-validate='Message is required')
+        textarea.input100(type='text' name='message' placeholder='Text')
+        span.focus-input100
+
+      .wrap-input100.validate-input
+        input.input100(type='text' name='tags' placeholder='Tags')
+        span.focus-input100
+
+      .container-contact100-form-btn
+        button.contact100-form-btn(type='submit' value="Add") Add

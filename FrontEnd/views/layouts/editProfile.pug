@@ -1,0 +1,79 @@
+extends ../layout
+
+block content
+
+    .sidebar-navigation
+          p.span Personal
+          nav
+            ul
+              li
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
+                a(href='/groups')
+                  span.glyphicon.glyphicon-th-large
+                  |                             Grupos
+            p.span App
+              ul
+                li
+                    a(href='#projects')
+                        span.glyphicon.glyphicon-heart
+                        |                             Amigos
+
+                li
+                    a(href='#blog')
+                        span.glyphicon.glyphicon-question-sign
+                        |                             Quem somos?
+            
+
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a
+            span.glyphicon.glyphicon-inbox
+              |  Mensagens
+        li
+          a(href='#')
+            .avatar  Avatar
+
+    .titulo
+        h2 AMAZE ME PLZ
+
+    .page-content
+
+        .containerProfile
+            h1 Edit Profile
+            hr
+            .row
+                .col-md-3
+                    .text-center
+                        img.avatar.img-circle(src='//placehold.it/100' alt='avatar')
+                        h6 Upload a different photo...
+                        input.form-control(type='file')
+
+                .col-md-9.personal-info
+                    .alert.alert-info.alert-dismissable
+                        a.panel-close.close(data-dismiss='alert') &times;
+                        i.fa.fa-coffee
+                        |           Confirme todas as suas alterações antes de guardar!
+                    h3 Personal info
+                    form.form-horizontal(role='form')
+                        .form-group
+                            label.col-lg-3.control-label Email:
+                            .col-lg-8
+                                input.form-control(type='text' value=user.email placeholder="email")
+                        .form-group
+                            label.col-md-3.control-label Username:
+                            .col-md-8
+                                input.form-control(type='text' value=user.name)
+                        .form-group
+                            label.col-md-3.control-label Password:
+                            .col-md-8
+                                input.form-control(type='password' value=user.password)
+                        .form-group
+                            label.col-md-3.control-label
+                            .col-md-8
+                                input.btn.btn-primary(type='button' value='Save Changes')
+                                span
+                                input.btn.btn-default(type='reset' value='Cancel')

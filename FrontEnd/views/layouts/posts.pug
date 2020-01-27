@@ -1,0 +1,108 @@
+extends ../layout
+
+block content
+    .sidebar-navigation
+          p.span Personal
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.glyphicon.glyphicon-home
+                  |                             Home
+              li              
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
+                a(href='/groups')
+                  span.glyphicon.glyphicon-th-large
+                  |                             Grupos
+            p.span App
+              ul
+                li
+                    a(href='#projects')
+                        span.glyphicon.glyphicon-heart
+                        |                             Amigos
+
+                li
+                    a(href='/credits')
+                        span.glyphicon.glyphicon-question-sign
+                        |                             Quem somos?
+            
+
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a
+            span.glyphicon.glyphicon-inbox
+              |  Mensagens
+        li
+          a(href='#')
+            .avatar  Avatar
+
+    .titulo
+        h2=nameTopico
+
+    .page-content
+        .row
+          .col-md-6
+            .widget-area.no-padding.blank
+              .status-upload
+                form
+                  textarea(placeholder='What are you thinking?')
+                  ul
+                    li
+                      a(title='' data-toggle='tooltip' data-placement='bottom' data-original-title='Picture')
+                        i.fa.fa-picture-o
+                  button.btn(type='submit' method="post" action="/addPost")
+                    i.fa.fa-share
+                    |  Publicar
+                  button.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                    i.fa.fa-globe
+                    | Público
+                  .dropdown-menu(aria-labelledby='dropdownMenuButton')
+                    a.dropdown-item(href='#')
+                      i.fa.fa-globe
+                      | Público
+                    a.dropdown-item(href='#')
+                      i.fa.fa-users
+                      | Amigos
+                    a.dropdown-item(href='#')
+                      i.fa.fa-user
+                      | Apenas eu
+
+        .containerPosts
+          .col-sm-8
+            .panel.panel-white.post.panel-shadow
+              each post in lista
+                .singlePost
+                  .post-heading
+                    .pull-left.image
+                      img.img-circle.avatar(src='http://bootdey.com/img/Content/user_1.jpg' alt='user profile image')
+                    .pull-left.meta
+                      .title.h5
+                        a(href='#')
+                          b=post.owner
+                        |                         publicou algo.
+                      h6.text-muted.time=post.date
+                  .post-description
+                    p=post.text
+                    .stats
+                      a.btn.btn-default.stat-item(href='#')
+                        i.fa.fa-thumbs-up.icon=post.likes
+                  .post-footer
+                    .input-group
+                      input.form-control(placeholder='Add a comment' type='text')
+                      span.input-group-addon
+                        a(href='#')
+                          i.fa.fa-edit
+                  each comment in post.comments      
+                    ul.comments-list
+                      li.comment
+                        a.pull-left(href='#')
+                          img.avatar(src=comment.imagem alt='avatar')
+                        .comment-body
+                          .comment-heading
+                            h4.user=comment.owner
+                            h5.time=comment.date
+                          p=comment.text

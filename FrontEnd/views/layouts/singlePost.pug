@@ -1,0 +1,40 @@
+head
+link#bootstrap-css(href='//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' rel='stylesheet')
+script(src='//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+script(src='//code.jquery.com/jquery-1.11.1.min.js')
+link(href='/css/singlePost.css', rel='stylesheet')
+
+body
+.modal.img-modal
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-body
+        .row
+          .col-md-8.modal-image
+            img.img-responsive(src='http://www.made-in-italy.com/files/imagecache/lg/pictures/travel-to-italy/news/2013/02/george-clooney-omega-testimonial-1.jpg')
+          .col-md-4.modal-meta
+            .modal-meta-top
+              button.close(type='button')
+                span(aria-hidden='true') &times;
+                span.sr-only Close
+              .img-poster.clearfix
+                a(href='/profile/:id')
+                  .img-circle=foto
+                strong
+                  a(href='/profile/:id')=dono
+                span='há ' + hora+ 'min'
+              ul.img-comment-list
+                each c in comentarios
+                    li
+                        .comment-img
+                            img(src='http://lorempixel.com/50/50/people/6')
+                        .comment-text
+                            strong
+                              a(href='/profile/:id')=dono
+                            p=c
+                            span.date.sub-text='há ' + hora+ 'min'
+            
+            .modal-meta-bottom
+                .form(action="/addComment" method="POST")
+                    input(type='text' name="comment" placeholder='Leave a comment...')
+                    input(type="submit")

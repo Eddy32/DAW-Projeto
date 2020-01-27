@@ -1,0 +1,57 @@
+
+
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  title Argon Dashboard PRO
+
+  link(href='/assets/img/brand/favicon.png' rel='icon' type='image/png')
+
+  link(href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet')
+  // Icons
+  link(href='/assets/vendor/nucleo/css/nucleo.min.css' rel='stylesheet')
+  link(href='/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' rel='stylesheet')
+
+  link(type='text/css' href='/assets/css/argon.min.css' rel='stylesheet')
+h1 Hello, world!
+
+script(src='/assets/vendor/jquery/dist/jquery.min.js')
+script(src='/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')
+
+script(src='/assets/js/argon.min.js')
+
+nav.navbar.navbar-horizontal.navbar-expand-lg.navbar-dark.bg-default
+  .container
+    a.navbar-brand(href='#') Default Color
+    button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbar-default' aria-controls='navbar-default' aria-expanded='false' aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbar-default.collapse.navbar-collapse
+      .navbar-collapse-header
+        .row
+          .col-6.collapse-brand
+            a(href='../../index.html')
+              img(src='../../assets/img/brand/blue.png')
+          .col-6.collapse-close
+            button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbar-default' aria-controls='navbar-default' aria-expanded='false' aria-label='Toggle navigation')
+              span
+              span
+      ul.navbar-nav.ml-lg-auto
+        li.nav-item
+          a.nav-link.nav-link-icon(href='#')
+            i.ni.ni-favourite-28
+            span.nav-link-inner--text.d-lg-none Discover
+        li.nav-item
+          a.nav-link.nav-link-icon(href='#')
+            i.ni.ni-notification-70
+            span.nav-link-inner--text.d-lg-none Profile
+        li.nav-item.dropdown
+          a#navbar-default_dropdown_1.nav-link.nav-link-icon(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            i.ni.ni-settings-gear-65
+            span.nav-link-inner--text.d-lg-none Settings
+          .dropdown-menu.dropdown-menu-right(aria-labelledby='navbar-default_dropdown_1')
+            a.dropdown-item(href='#') Action
+            a.dropdown-item(href='#') Another action
+            .dropdown-divider
+            a.dropdown-item(href='#') Something else here
+

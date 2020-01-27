@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    .sidebar-navigation
+          p.span Personal
+          nav
+            ul
+              li
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
+                a(href='/groups')
+                  span.glyphicon.glyphicon-th-large
+                  |                             Grupos
+            p.span App
+              ul
+                li
+                    a(href='#projects')
+                        span.glyphicon.glyphicon-heart
+                        |                             Amigos
+
+                li
+                    a(href='#blog')
+                        span.glyphicon.glyphicon-question-sign
+                        |                             Quem somos?
+            
+
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a
+            span.glyphicon.glyphicon-inbox
+              |  Mensagens
+        li
+          a(href='#')
+            .avatar  Avatar
+
+    .titulo
+        h2 AMAZE ME PLZ
+
+    .page-content
+        p somos todos amigos crl

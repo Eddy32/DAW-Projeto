@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  button.w3-btn.w3-round-large(onclick="window.location.href = '/register'") Registar utilizador
+  button.w3-btn.w3-round-large(onclick="window.location.href = '/logout'") Logout
+  h1 Agenda de Eventos
+  table(border="1")
+    tr
+      th Name
+      th Owner
+      th Bio
+      th Users
+      tr 
+        td
+            a(href='http://localhost:5004/groups/' + dado._id)= dado.name
+        td= dado.owner
+        td= dado.bio
+        td
+          ul
+            each p in ents
+              li= p.name
+    

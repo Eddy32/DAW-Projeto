@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  button.w3-btn.w3-round-large(onclick="window.location.href = '/register'") Registar utilizador
+  button.w3-btn.w3-round-large(onclick="window.location.href = '/logout'") Logout
+  h1 Agenda de Eventos
+  table(border="1")
+    tr
+      th Owner
+      th text
+      th title
+      th likes
+      th comments 
+      th Comentar
+    each e in lista
+      tr
+        td=e.owner
+           // a(href='http://localhost:5004/groups/' + e._id)= e.name eventualmente ira para o perfil do user 
+        td= e.text
+        td= e.title
+        td= e.NumLikes
+            form(action=('http://localhost:5004/groups/' + idG + '/topics/' + idT + '/likePost/' + e._id + '?user=' +  user._id ) method="POST")
+                input(type="submit" value="Like")
+        td
+          ul
+            each p in e.comments
+              li= p
+        td Comentar
+  a(href='http://localhost:5004/criaGrupo') Criar Grupo
+    

@@ -1,0 +1,232 @@
+extends ../layout
+
+block content
+  .sidebar-navigation.hidde-sm
+          p.text-gray.font-weight-bold.text-uppercase.px-3.small.pb-4.mb-0 Menu
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.rect
+                  span.circle
+                  |                             Home
+              li
+                a(href='/groups')
+                  span.rect
+                  span.circle
+                  |                             Groups
+              li
+                a(href='#projects')
+                  span.rect
+                  span.circle
+                  |                             Recent Work
+              li
+                a(href='#video')
+                  span.rect
+                  span.circle
+                  |                             Presentation
+              li
+                a(href='#blog')
+                  span.rect
+                  span.circle
+                  |                             Blog Entires
+  .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(src='assets/vendor/nucleo/fonts/ic_inbox_24px.svg')
+            span.glyphicon.glyphicon-user
+              |  Avatar
+        li
+          a(href='#')
+            span.glyphicon.glyphicon-log-in
+              |  Login
+
+  .titulo
+        h2 amaze me pls
+
+  ////////////PAGINA EM SI      
+
+  .page-content
+
+    .row
+      .col-sm-9
+        form.w3-container(action="http://localhost:5004/groups/"  method="GET")
+
+          select.form-control(data-toggle='select' class="form-control" data-placeholder='Disabled results')
+            each grupo in lista
+              if (grupo.users.includes(user._id))
+                option= grupo.name
+              else
+                if (grupo.visible)
+                  if(!grupo.needRequest)
+                     option= grupo.name
+      
+          button.btn.btn-success(type='submit') Criar
+
+    .row-edit
+      .card-columns
+        each grupo in lista
+          if (grupo.users.includes(user._id))
+            .card
+              img.card-img-top(src='assets/img/img_2.jpg' alt='Card image cap')
+              .card-body
+                h5.card-title.h2GOD= grupo.name
+                if(!grupo.visible)
+                  badge.badge-pill.badge-danger Oculto
+                else
+                  if(grupo.needRequest)
+                    badge.badge-pill.badge-warning Privado
+                  else 
+                    badge.badge-pill.badge-success Público
+                p.card-text
+                  | Descrição: #{grupo.bio}
+                p.card-text
+                  small.text-muted Membros: #{grupo.users.length} #I'm in
+                form(action=('http://localhost:5004/groups/' + grupo._id) method="GET")         
+                  button.btn.btn-success(type='submit') Entrar
+          else
+            if (grupo.visible)
+              if (!grupo.needRequest)
+                .card
+                  img.card-img-top(src='assets/img/img_2.jpg' alt='Card image cap')
+                  .card-body
+                    h5.card-title.h2GOD= grupo.name
+                    if(!grupo.visible)
+                       badge.badge-pill.badge-danger Oculto
+                    else 
+                      if(grupo.needRequest)
+                         badge.badge-pill.badge-warning Privado
+                      else 
+                         badge.badge-pill.badge-success Público
+                    p.card-text
+                      | Descrição: #{grupo.bio}
+                    p.card-text
+                      small.text-muted Membros: #{grupo.users.length}
+                    .row
+                      .col-sm-2
+                        form(action=('http://localhost:5004/addMember/' + grupo._id + '/membro/' + user._id) method="POST")         
+                          button.btn.btn-success(type='submit') Entrar
+                      .col-sm-1
+                        form(action=('http://localhost:5004/groups/' + grupo._id) )         
+                          button.btn.btn-success(type='submit') Ver
+              else
+                .card
+                  img.card-img-top(src='assets/img/img_2.jpg' alt='Card image cap')
+                  .card-body
+                    h5.card-title.h2GOD= grupo.name
+                    if(!grupo.visible)
+                      badge.badge-pill.badge-danger Oculto
+                    else 
+                      if(grupo.needRequest)
+                        badge.badge-pill.badge-warning Privado 
+                      else 
+                        badge.badge-pill.badge-success Público
+                    if(grupo.pendent.includes(user._id))
+                      span.btn-inner--icon
+                        i.ni.ni-send
+                    p.card-text
+                      | Descrição: #{grupo.bio}
+                    p.card-text
+                      small.text-muted Membros: #{grupo.users.length}
+                    form(action=('http://localhost:5004/groups/' + grupo._id + '/request?member=' + user._id ) method="POST")
+                      button.btn.btn-success(type='submit') Pedir
+
+    .row
+                .col-sm-6
+                  button.btn.btn-success(type='button' data-toggle='modal' data-target='#exampleModal') Criar Grupo
+
+                  // Modal
+                  #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+                    .modal-dialog.modal-dialog-centered(role='document')
+                      .modal-content
+                        .modal-header
+                          h5#exampleModalLabel.modal-title Dados do Grupo a Criar
+                          button.close(type='button' data-dismiss='modal' aria-label='Close')
+                            span(aria-hidden='true') &times;
+                        .modal-body
+                            form.w3-container(action="/criaGrupo" method="POST")
+                              
+                              input.form-control(type='text' name="name" required="" placeholder="Nome do Grupo" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
+                              br
+                              input.form-control(type='text' name="bio" placeholder="Biografia do Grupo" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
+                              br
+                              select.form-control(data-toggle='select' name="visible" data-placeholder='Disabled results')
+                                option(value='true') Visivel
+                                option(value='false') Secreto
+                              br
+                              select.form-control(data-toggle='select' name="needRequest" data-placeholder='Disabled results')
+                                option(value='true') Público 
+                                option(value='false') Privado
+                              br
+
+                              button.btn.btn-success(type='submit') Criar
+    
+
+                        .modal-footer
+                          button.btn.btn-success(type='button' data-dismiss='modal') Cancelar
+
+
+
+    form(action='http://localhost:5004/' method="GET")
+        button.btn.btn-info(type='submit') Página Inicial
+  /////
+                  
+    .row-edit
+      each grupo in lista
+        if (grupo.users.includes(user._id))
+                .col-md-6.col-lg-4
+                  a.a-block.d-flex.align-items-center.height-md(href='blog-single.html' style="background-image: url('assets/img/pepe.jpg'); ")
+                    .text
+                      .post-meta
+                        span.category= grupo.name
+                        if(!grupo.visible)
+                          span.mr-2 SECRET
+                        else if(needRequest)
+                          span.mr-2 PRIVATE
+                        else 
+                          span.mr-2 PUBLIC
+                        |  &bullet;
+                        span.ml-2
+                          span.fa.fa-users
+                            h= grupo.users.length
+                      h3= grupo.bio
+        else
+            if (grupo.visible)
+              .col-md-6.col-lg-4
+                if (!grupo.needRequest)
+                  a.a-block.d-flex.align-items-center.height-md(href='blog-single.html' style="background-image: url('assets/img/pepe.jpg'); ")
+                    .text
+                      .post-meta
+                        span.category= grupo.name
+                        if(!grupo.visible)
+                          span.mr-2 SECRET
+                        else if(needRequest)
+                          span.mr-2 PRIVATE
+                        else 
+                          span.mr-2 PUBLIC
+                        |  &bullet;
+                        span.ml-2
+                          span.fa.fa-users
+                            h= grupo.users.length
+                      h3= grupo.bio
+                else 
+                  a.a-block.d-flex.align-items-center.height-md(style="background-image: url('assets/img/pepe.jpg'); ")
+                    .text
+                      .post-meta
+                        span.category= grupo.name
+                        if(!grupo.visible)
+                          span.mr-2 SECRET
+                        else if(needRequest)
+                          span.mr-2 PRIVATE
+                        else 
+                          span.mr-2 PUBLIC
+                        |  &bullet;
+                        span.ml-2
+                          span.fa.fa-users
+                            h= grupo.users.length
+                      h3= grupo.bio
+
+    button.btn.btn-primary(type='button') Button  
+    button.btn.btn-info(type='button') Info
+
+    

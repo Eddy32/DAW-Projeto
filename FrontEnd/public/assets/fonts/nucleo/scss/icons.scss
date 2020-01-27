@@ -1,0 +1,13 @@
+/*------------------------
+	icons
+-------------------------*/
+@function unicode($str) {
+  @return unquote("\"\\#{$str}\"");
+}
+
+$icon-ic_inbox_24px: unicode(ea01);
+
+.icon-ic_inbox_24px::before {
+  content: $icon-ic_inbox_24px;
+}
+

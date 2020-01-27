@@ -1,0 +1,281 @@
+extends layout
+
+block content
+  .sidebar-navigation.hidde-sm
+          p.text-gray.font-weight-bold.text-uppercase.px-3.small.pb-4.mb-0 Menu
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.rect
+                  span.circle
+                  |                             Home
+              li
+                a(href='/groups')
+                  span.rect
+                  span.circle
+                  |                             Groups
+              li
+                a(href='#projects')
+                  span.rect
+                  span.circle
+                  |                             Recent Work
+              li
+                a(href='#video')
+                  span.rect
+                  span.circle
+                  |                             Presentation
+              li
+                a(href='#blog')
+                  span.rect
+                  span.circle
+                  |                             Blog Entires
+  .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(src='assets/vendor/nucleo/fonts/ic_inbox_24px.svg')
+            span.glyphicon.glyphicon-user
+              |  Avatar
+        li
+          a(href='#')
+            span.glyphicon.glyphicon-log-in
+              |  Login
+
+  .titulo
+        h2 amaze me pls
+
+  ////////////PAGINA EM SI      
+  .page-content
+    .row
+      .col-sm-9
+          each e,index in lista
+              ul.list-group.list-group-flush.list.my--3
+                  li.list-group-item.px-0
+                    .row.align-items-center
+                      .col-auto
+                        // Avatar
+                        a.avatar.rounded-circle(href='#')
+                          img(alt='Image placeholder' src='../../assets/img/theme/team-1.jpg')
+                      .col.ml--2
+                        h4.mb-0
+                          | Titulo: #{e.title} 
+                        h5.mt-3.mb-1
+                          | Criador: 
+                          each mem in members
+                            if(mem._id==e.creator)
+                              a(href='/feed') #{mem.name}
+                      .col-auto
+                        .row
+                          .col-sm-4
+                            form(action=('http://localhost:5004/groups/' + group._id + '/topic/' + e._id + '?nmT=' + e.name) method="GET")
+                              button.btn.btn-sm.btn-primary(type='submit') Ver
+                          .col-sm-1
+                            if(group.admins.includes(user._id))
+                              form(action=('http://localhost:5004/groups/' + group._id + '/rmTopic/' + e._id) method="POST")
+                                button.btn.btn-sm.btn-primary(type='submit') Apagar
+
+      .col-sm-2
+              h4.h2GOD Sobre
+              p= group.bio
+              .row
+                .col-sm-6
+                  button.btn.btn-success(type='button' data-toggle='modal' data-target='#exampleModal') Membros
+
+                  // Modal
+                  #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+                    .modal-dialog.modal-dialog-centered(role='document')
+                      .modal-content
+                        .modal-header
+                          h5#exampleModalLabel.modal-title Membros
+                          button.close(type='button' data-dismiss='modal' aria-label='Close')
+                            span(aria-hidden='true') &times;
+                        .modal-body
+
+                          
+                            .table-responsive
+                              div
+                                table.table.align-items-center.table-dark
+                                  thead.thead-dark
+                                    tr
+                                      th.sort(scope='col' data-sort='budget') Name
+                                      th.sort(scope='col' data-sort='status') Email
+                                      th(scope='col')
+                                  each u in members
+                                    tbody.list
+                                      tr
+                                        td.budget
+                                          | #{u.name}
+                                        td
+                                          | #{u.email}
+                                        td.text-right
+                                          .row
+                                            .col-sm-5
+                                            .col-sm-2
+                                              form(action=('http://localhost:5004/groups/'+group._id+'/members' ) method="GET") 
+                                                button.btn.btn-icon.btn-primary(type='submit')
+                                                  span.btn-inner--icon
+                                                    i.ni.ni-single-02
+
+                                            .col-sm-2
+                                              if(group.admins.includes(user._id))
+                                                form(action=('http://localhost:5004/removeMember/'+group._id+'/membro/' + u._id ) method="POST")
+                                                  button.btn.btn-icon.btn-primary(type='submit')
+                                                    span.btn-inner--icon
+                                                      i.ni.ni-scissors
+
+                                            .col-sm-2
+                                              if(group.owner==user._id)
+                                                if(group.admins.includes(u._id))
+                                                  form(action=('http://localhost:5004/groups/'+group._id+'/demoteAdmin/' + u._id ) method="POST")
+                                                    button.btn.btn-icon.btn-primary(type='submit')
+                                                      span.btn-inner--icon
+                                                        i.ni.ni-diamond
+                                                else
+                                                  form(action=('http://localhost:5004/groups/'+group._id+'/promoteAdmin/' + u._id ) method="POST")
+                                                    button.btn.btn-icon.btn-primary(type='submit')
+                                                      span.btn-inner--icon
+                                                        i.ni.ni-hat-3
+
+                                              else 
+                                                if(group.admins.includes(user._id))
+                                                  if(!group.admins.includes(u._id))
+                                                    form(action=('http://localhost:5004/groups/'+group._id+'/members' ) method="POST")
+                                                      button.btn.btn-icon.btn-primary(type='submit')
+                                                        span.btn-inner--icon
+                                                          i.ni.ni-hat-3
+
+
+                                          
+
+
+
+                        .modal-footer
+                          button.btn.btn-success(type='button' data-dismiss='modal') Close
+
+                if(group.admins.includes(user._id))
+                  .col-sm-1
+                    button.btn.btn-success(type='button' data-toggle='modal' data-target='#teste') Pendentes
+
+                    // Modal
+                    #teste.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+                      .modal-dialog.modal-dialog-centered(role='document')
+                        .modal-content
+                          .modal-header
+                            h5#teste.modal-title Membros
+                            button.close(type='button' data-dismiss='modal' aria-label='Close')
+                              span(aria-hidden='true') &times;
+                          .modal-body
+
+                            each p in pendentes
+                              .table-responsive
+                                div
+                                  table.table.align-items-center.table-dark
+                                    thead.thead-dark
+                                      tr
+                                        th.sort(scope='col' data-sort='budget') Name
+                                        th.sort(scope='col' data-sort='status') Email
+                                        th(scope='col')
+                                    tbody.list
+                                      tr
+                                        td.budget
+                                          | #{p.name}
+                                        td
+                                          | #{p.email}
+                                        td.text-right
+                                          .row
+                                            .col-sm-5
+                                            .col-sm-2
+                                              form(action=('/groups/' + group._id + '/acceptMember?member='+ p._id) method="POST")
+                                                button.btn.btn-icon.btn-primary(type='submit')
+                                                  span.btn-inner--icon
+                                                    i.ni.ni-check-bold
+                                            .col-sm-2
+                                              if(group.admins.includes(user._id))
+                                                form(action=('/groups/' + group._id + '/denyMember?member='+ p._id) method="POST")
+                                                  button.btn.btn-icon.btn-primary(type='submit')
+                                                    span.btn-inner--icon
+                                                      i.ni.ni-fat-remove
+
+
+
+                          .modal-footer
+                            button.btn.btn-success(type='button' data-dismiss='modal') Close
+
+
+
+    br
+
+    button.btn.btn-success(type='button' data-toggle='modal' data-target='#topico') Novo Tópico
+
+    // Modal
+    #topico.modal.fade(tabindex='-1' role='dialog' aria-labelledby='topicoLabel' aria-hidden='true')
+      .modal-dialog.modal-dialog-centered(role='document')
+        .modal-content
+          .modal-header
+            h5#topico.modal-title Dados do Tópico a Criar
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+              form.w3-container(action=("/criaTopico/" + group._id ) method="POST")
+                
+                input.form-control(type='text' name="title" required="" placeholder="Titulo do Novo Tópico" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
+                br
+                button.btn.btn-success(type='submit') Criar
+
+
+          .modal-footer
+            button.btn.btn-success(type='button' data-dismiss='modal') Cancelar    
+            
+      
+
+        
+
+
+
+
+
+
+  //
+    .dropdown
+                            a.btn.btn-sm.btn-icon-only.text-light(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                              i.fas.fa-ellipsis-v
+                            .dropdown-menu.dropdown-menu-right.dropdown-menu-arrow
+                              form(action=('http://localhost:5004/user/' ) ) 
+                                input(type='submit' value='ver perfil')
+                              .dropdown-item(href='#') Another action
+                              .dropdown-item(href='#') Something else here
+
+
+
+    table(border="1")
+      tr
+        th title
+        th id
+        th idGrupo
+        if (group.admins.includes(user._id))
+          th Options
+      each e in lista
+        tr
+          td
+              a(href='http://localhost:5004/groups/' + e.idGrupo + '/topic/'+ e._id)= e.title
+
+          td= e._id
+          td= e.idGrupo
+          if (group.admins.includes(user._id))
+            td
+              form(action=('http://localhost:5004/groups/' + group._id + '/rmTopic/' + e._id) method="POST")
+                input(type="submit" value="Remove")
+    table(border="1")
+      tr
+        th membros
+      each e in members
+        tr
+          td= e.name
+
+    if (group.admins.includes(user._id))
+      a(href='http://localhost:5004/group/'+group._id + '/viewPendent') Pedidos para Membros
+
+    if user._id==group.owner
+      a(href='http://localhost:5004/removeMember/'+group._id) Apagar membro
+
+    

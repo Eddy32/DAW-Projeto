@@ -1,0 +1,16 @@
+extends layout
+block content
+  table(border="1")
+    tr
+      th Name
+      if (dado.admins.includes(user._id))
+        th Opçoes
+    each e in ents
+      tr
+        td= e.name
+        if (dado.admins.includes(user._id))
+            td
+                form(action=('/groups/' + dado._id + '/acceptMember?member='+ e._id) method="POST")
+                    input(type="submit" value="Aceitar")
+                form(action=('/groups/' + dado._id + '/denyMember?member='+ e._id) method="POST")
+                    input(type="submit" value="Rejeitar")

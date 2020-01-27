@@ -1,0 +1,78 @@
+extends ../layout
+
+block content
+    .sidebar-navigation
+          p.span Personal
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.glyphicon.glyphicon-home
+                  |                             Home
+              li              
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
+                a(href='/groups')
+                  span.glyphicon.glyphicon-th-large
+                  |                             Grupos
+            p.span App
+              ul
+                li
+                    a(href='#projects')
+                        span.glyphicon.glyphicon-heart
+                        |                             Amigos
+
+                li
+                    a(href='/credits')
+                        span.glyphicon.glyphicon-question-sign
+                        |                             Quem somos?
+            
+
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a
+            span.glyphicon.glyphicon-inbox
+              |  Mensagens
+        li
+          a(href='#')
+            .avatar  Avatar
+
+    .titulo
+        h2 AMAZE ME PLZ
+
+    .page-content
+        #teachers-section.site-section
+            .containerCredits
+                .row.mb-5.justify-content-center
+                    .col-lg-7.mb-5.text-center(data-aos='fade-up' data-aos-delay='')
+                        h2.section-title Quem somos?
+                        p.mb-5
+                            | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
+                .row
+                    .col-md-6.col-lg-4.mb-4(data-aos='fade-up' data-aos-delay='100')
+                        .teacher.text-center
+                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='assets/img/ines.jpg' alt='Image')
+                            .py-2
+                                h3.text-black Inês Alves
+                                p.position MiEI
+                                p
+                                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
+                    .col-md-6.col-lg-4.mb-4(data-aos='fade-up' data-aos-delay='200')
+                        .teacher.text-center
+                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='images/person_2.jpg' alt='Image')
+                            .py-2
+                                h3.text-black Pedro Lima
+                                p.position MiEI
+                                p
+                                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
+                    .col-md-6.col-lg-4.mb-4(data-aos='fade-up' data-aos-delay='300')
+                        .teacher.text-center
+                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='images/person_3.jpg' alt='Image')
+                            .py-2
+                                h3.text-black Ricardo Pereira
+                                p.position MiEI
+                                p
+                                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
