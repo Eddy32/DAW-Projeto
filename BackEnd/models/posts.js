@@ -12,6 +12,7 @@ var commentsSchema = new mongoose.Schema({
 var postsSchema = new mongoose.Schema({
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
     idTopic: {type: mongoose.Schema.Types.ObjectId, ref: 'topics', required: true},
+    idGroup: {type: mongoose.Schema.Types.ObjectId, ref: 'groups', required: true},
     text: String,
     imagem: String,
     title: {type: String, required: true},

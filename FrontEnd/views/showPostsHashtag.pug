@@ -1,4 +1,4 @@
-extends ../layout
+extends layout
 
 block content
     .sidebar-navigation
@@ -58,34 +58,27 @@ block content
     .titulo
         h2 Mr. Book
 
-        
-    .page-content
-        .card.card-profile
-            img.card-img-top(src='../../assets/img/banner.png' alt='Image placeholder')
-            .row.justify-content-center
-                .col-lg-3.order-lg-2
-                    .card-profile-image
-                        a(href='/profile/'+user._id)
-                            if (foto!="")
-                                img.rounded-circle(src=user.foto)
-                            else
-                                img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
-            .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4
-                .d-flex.justify-content-between
-                    a.btn.btn-sm.btn-info.mr-4(href='http://localhost:5004/users/'+user._id+'/editProfile') Editar perfil
-                    a.btn.btn-sm.btn-info.float-right(href='/user/' + user._id + '/viewRequests') Pedidos de Amizade
-            .card-body.pt-0
-                .row(style="padding-top:60px")
-                    .col
-                        .card-profile-stats.d-flex.justify-content-center
-                            div
-                                span.heading=user.friends.length
-                                span.description Amigos
-                            div
-                                span.heading=nrGrupos
-                                span.description Grupos
-                .text-center
-                    h5.h3=user.name
-                        span.font-weight-light=user.dateBirth
-                    .h5
-                        i.ni.location_pin.mr-2=user.bio
+
+        .page-content
+            .containerPosts
+                .col-sm-8
+                  .panel.panel-white.post.panel-shadow
+                    each post in postes
+                      each grupo in grupos
+                        if(grupo._id == post.idGroup)
+                          .singlePost
+                            .post-heading
+                              .pull-left.image
+                              .pull-left.meta
+                                .title.h5
+                                  a(href='#')
+                                  |                         publicou algo.
+                                h6.text-muted.time= ("" + new Date(parseInt(post.date))).split('GMT')[0]
+                            .post-description
+                              h4 Titulo: #{post.title}
+
+                              p=post.text
+                              .stats
+                                .row
+                              
+                          

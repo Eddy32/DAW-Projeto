@@ -33,6 +33,36 @@ module.exports.consultarID = id => {
 
 //------------------PUT'S
 
+module.exports.addFriendRequest = (idU,idA) => {
+    return Utilizador.update(
+        { _id: idU },
+        { $push: { 'pendent' : idA } }
+      );
+}
+
+//nega pedido para entrar
+module.exports.denyFriendRequest = (idU,idA) => {
+    return Utilizador.update(
+        { _id: idU },
+        { $pull: { 'pendent' : idA } }
+      );
+}
+
+
+//aceita pedido para entrar no grupo
+module.exports.acceptFriendRequest = (idU,idA) => {
+    Utilizador.update(
+        { _id: idU },
+        { $pull: { 'pendent' : idA }, $push: { 'friends' : idA }  }
+      )
+        .exec()
+
+    return Utilizador.update(
+        { _id: idA },
+        { $push: { 'friends' : idU }  }
+      );
+}
+
 //insere o user U
 module.exports.inserir = u => {
     var novo = new Utilizador(u)

@@ -1,0 +1,93 @@
+extends layout
+
+block content
+    .sidebar-navigation
+          p.span Personal
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.glyphicon.glyphicon-home
+                  |                             Home
+              li
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
+                a(href='#projects')
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
+            p.span App
+              ul
+                
+                li
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
+
+                li
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
+
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a
+            span.glyphicon.glyphicon-inbox
+              |  Mensagens
+        li
+          a(href='#')
+            .avatar  Avatar
+
+    .titulo
+        h2 Mr. Book
+
+
+    .page-content
+        if(lista.length > 0)
+                .table-responsive
+                    div
+                    table.table.align-items-center.table-dark
+                        thead.thead-dark
+                            tr
+                                th.sort(scope='col' data-sort='budget') Name
+                                th.sort(scope='col' data-sort='status') Email
+                                th(scope='col')
+                        each p in lista    
+                            tbody.list
+                                tr
+                                    td.budget
+                                        | #{p.name}
+                                    td
+                                        | #{p.email}
+                                    td.text-right
+                                        .row
+                                            .col-sm-5
+                                            .col-sm-2
+                                                form(action=('/user/' + user._id + '/acceptMember?member='+ p._id) method="POST")
+                                                    button.btn.btn-icon.btn-primary(type='submit')
+                                                    span.btn-inner--icon
+                                                        i.ni.ni-check-bold
+                                            .col-sm-2
+                                                form(action=('/user/' + user._id + '/denyMember?member='+ p._id) method="POST")
+                                                button.btn.btn-icon.btn-primary(type='submit')
+                                                    span.btn-inner--icon
+                                                    i.ni.ni-fat-remove
+        else
+            h Não tem novos pedidos de amizade
