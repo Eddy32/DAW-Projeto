@@ -224,14 +224,14 @@
 /*POSTS*/
 
 button.input-group-addon {
-    position: absolute;
-    right: -38px;
-    top: 0;
-    padding: 2px;
-    z-index: 999;
-    height: 34px;
-    width: 38px;
-  }
+  position: absolute;
+  right: -38px;
+  top: 0;
+  padding: 2px;
+  z-index: 999;
+  height: 34px;
+  width: 38px;
+}
 
 .panel-shadow {
     box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
