@@ -42,6 +42,9 @@ module.exports.inserir = u => {
     return novo.save()
 }
 
+
+
+
 //inserir novo Comment
 module.exports.addComment = (idP,comment) => {
     return Post
@@ -64,6 +67,7 @@ module.exports.removeComment = (idP,idC) => {
 module.exports.allTopic = idT => {
     return Post
         .find({idTopic: idT})
+        .sort({date: -1})
         .exec()
 }
 

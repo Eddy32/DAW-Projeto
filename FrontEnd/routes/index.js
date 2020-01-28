@@ -231,7 +231,24 @@ router.get('/groups2/:id', function(req, res){
 router.get('/groups/:idG/topic/:idT',verificaAutenticacao, function(req, res){
    var nameTopic = req.query.nmT;
    axios.get('http://localhost:5003/posts/byTopic/' + req.params.idT )
-        .then(dados => res.render('layouts/posts', {lista: dados.data, idG:req.params.idG, nameTopico: nameTopic, idT: req.params.idT,user:req.user}))
+        .then(topics => {
+          axios.get('http://localhost:5003/groups/'+ req.params.idG)
+            .then(dados => {
+              axios.get('http://localhost:5003/utilizadores/multiple?array='+ dados.data.users)
+                .then(membros => {
+                  res.render('layouts/posts', {lista: topics.data, idG:req.params.idG, nameTopico: nameTopic, idT: req.params.idT,user:req.user, members: membros.data })
+                })
+                .catch(erro => {
+                  res.render('error',{error: erro})
+                })
+            })
+            .catch(erro => {
+              res.render('error',{error: erro})
+            })
+          
+        
+        })
+
         .catch(e => res.render('error', {error: e})) 
     //res.render('layouts/groups') 
   })
@@ -320,14 +337,29 @@ router.post('/criaGrupo', function(req,res){
 
 
 router.post('/addPost', function(req,res){
+  var hashtagz = req.body.hashtag.split('#')
+  hashtagz.shift();
   axios.post('http://localhost:5003/posts', {
    title: req.body.title,
-   text: req.body.message,
+   text: req.body.text,
+   hashtag: hashtagz,
+   idTopic: req.query.idT,
    owner: req.user._id
   })
-    .then(dados => res.redirect('/'))
+    .then(dados => res.redirect('/groups/' + req.query.idG + '/topic/' + req.query.idT))
     .catch(e => res.render('error', {error: e}))
 })
+
+router.post('/addComent', function(req,res){
+  console.log("TESXTAO: "  +req.body.texto + "- " + req.query.idP )
+  axios.post('http://localhost:5003/posts/' + req.query.idP + '/addComment' , {
+    owner: req.user._id,
+    text: req.body.texto
+  })
+    .then(dados => res.redirect('/groups/' + req.query.idG + '/topic/' + req.query.idT))
+    .catch(e => res.render('error', {error: e}))
+})
+
 
 router.post('/addComment', function(req,res){
   console.log("não chega aquiiiii :(")

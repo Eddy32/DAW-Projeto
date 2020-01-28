@@ -73,10 +73,15 @@ router.post('/:id/like/:idU', function(req,res){
 
 //add comment ao post
 router.post('/:id/addComment', function(req,res){
+  console.log("MOSTRA BODY: " + req.body + "DADO: " + req.body.owner)
   Posts.addComment(req.params.id,req.body)
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
 })
+
+
+
+
 
 //remove comment do post
 router.post('/:id/rmComment', function(req,res){

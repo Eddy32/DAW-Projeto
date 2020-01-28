@@ -17173,6 +17173,8 @@ a.text-lighter:focus
     height: 48px;
 
     color: #fff;
+    margin-top:10px;
+    margin-right:3px;
     border-radius: 50%;
     background-color: #adb5bd;
 
