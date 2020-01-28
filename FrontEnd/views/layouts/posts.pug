@@ -9,26 +9,41 @@ block content
                 a(href='/feed')
                   span.glyphicon.glyphicon-home
                   |                             Home
-              li              
+              li
                 a(href='/profile')
                   span.glyphicon.glyphicon-user
                   |                             Perfil
               li
-                a(href='/groups')
-                  span.glyphicon.glyphicon-th-large
-                  |                             Grupos
+                a(href='#projects')
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
             p.span App
               ul
+                
                 li
-                    a(href='#projects')
-                        span.glyphicon.glyphicon-heart
-                        |                             Amigos
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
 
                 li
-                    a(href='/credits')
-                        span.glyphicon.glyphicon-question-sign
-                        |                             Quem somos?
-            
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
 
     .hero-image
       ul.nav.navbar-nav.navbar-right
@@ -37,11 +52,12 @@ block content
             span.glyphicon.glyphicon-inbox
               |  Mensagens
         li
-          .avatar  
-            img(src='/assets/img/pepe.jpg' alt='Card image cap')
+          a(href='#')
+            .avatar  Avatar
 
     .titulo
-        h2=nameTopico
+        h2 Mr. Book
+
 
     //- VERDADEIRO CODIGO COMEÇA AQUI
     .page-content
