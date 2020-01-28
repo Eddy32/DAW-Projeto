@@ -14,21 +14,21 @@ head
     script.
         anychart.onDocumentReady(function() {
             var data = [
-                {"x": "Mandarin chinese", "value": 1, category: "Sino-Tibetan"},
-                {"x": "English", "value": 9, category: "Indo-European"},
-                {"x": "Hindustani", "value": 5, category: "Indo-European"},
-                {"x": "Spanish", "value": 5, category: "Indo-European"},
-                {"x": "Arabic", "value": 4, category: "Afro-Asiatic"},
-                {"x": "Malay", "value": 24, category: "Austronesian"},
-                {"x": "Russian", "value": 20, category: "Indo-European"},
-                {"x": "Bengali", "value": 6, category: "Indo-European"},
-                {"x": "Portuguese", "value": 9, category: "Indo-European"},
-                {"x": "French", "value": 22, category: "Indo-European"},
-                {"x": "Hausa", "value": 5, category: "Afro-Asiatic"},
-                {"x": "Punjabi", "value": 18, category: "Indo-European"},
-                {"x": "Japanese", "value": 2, category: "Japonic"},
-                {"x": "German", "value": 1, category: "Indo-European"},
-                {"x": "Persian", "value": 12, category: "Indo-European"}
+                {"hashtag": "Mandarin chinese", "value": 1},
+                {"hashtag": "English", "value": 9},
+                {"hashtag": "Hindustani", "value": 5},
+                {"hashtag": "Spanish", "value": 5},
+                {"hashtag": "Arabic", "value": 4},
+                {"hashtag": "Malay", "value": 24},
+                {"hashtag": "Russian", "value": 20},
+                {"hashtag": "Bengali", "value": 6},
+                {"hashtag": "Portuguese", "value": 9},
+                {"hashtag": "French", "value": 22},
+                {"hashtag": "Hausa", "value": 5, },
+                {"hashtag": "Punjabi", "value": 18, },
+                {"hashtag": "Japanese", "value": 2, },
+                {"hashtag": "German", "value": 1, },
+                {"hashtag": "Persian", "value": 12, }
             ];
 
             var chart = anychart.tagCloud(data);
@@ -40,7 +40,7 @@ head
             chart.colorRange(true);
 
             chart.listen("pointClick", function(e){
-                var url = "https://en.wikipedia.org/wiki/" + e.point.get("x");
+                var url = "https://en.wikipedia.org/wiki/" + e.point.get("hashtag");
                 window.open(url, "_blank");
             });
 

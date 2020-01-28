@@ -89,9 +89,8 @@ router.get('/checkProfile/:idU', verificaAutenticacao, function(req, res){
 
 
 router.get('/hashtag', verificaAutenticacao, function(req, res){
-  //axios.get('http://localhost:5003/utilizadores/byID/'+ req.params.idU) ha de precisar para fazer o wordcloud
-    //   .then(dados => res.render('layouts/editProfile', {user:req.user}))
-  res.render("hastag");
+  axios.get('http://localhost:5003/posts/countHashtags')
+       .then(dados => res.render('cloud', {tags: dados.data}))
 })
 
 
@@ -169,8 +168,13 @@ router.get('/groups/:id',verificaAutenticacao, function(req, res){
                 if(grupo.data.users.includes(req.user._id)){
                   console.log("FAZES PARTE: " + req.user._id + "No grupo: " + grupo.data._id)
                   res.render('topics', {lista: dados.data,members: membros.data,user: req.user,group: grupo.data,pendentes: []})
-                }else
-                res.redirect('/groups')
+                }else{ 
+                  if(!grupo.data.needRequest)
+                    res.render('topics', {lista: dados.data,members: membros.data,user: req.user,group: grupo.data,pendentes: []})
+                  else res.redirect('/groups')
+                }
+
+                
 
 
 
