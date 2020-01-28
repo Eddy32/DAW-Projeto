@@ -69,11 +69,11 @@ block content
           select.form-control(data-toggle='select' class="form-control" data-placeholder='Disabled results')
             each grupo in lista
               if (grupo.users.includes(user._id))
-                option= grupo.name
+                option=grupo.name
               else
                 if (grupo.visible)
                   if(!grupo.needRequest)
-                     option= grupo.name
+                     option=grupo.name
       
           button.btn(type='submit') Criar
 
@@ -117,7 +117,7 @@ block content
                     p.card-text
                       small.text-muted Membros: #{grupo.users.length}
                     .row
-                      .col-sm-2
+                      .col-sm-3
                         form(action=('http://localhost:5004/addMember/' + grupo._id + '/membro/' + user._id) method="POST")         
                           button.btn.btn-success(type='submit') Entrar
                       .col-sm-1

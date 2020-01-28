@@ -9,6 +9,10 @@ const fs = require('fs')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
+router.get('/cloud', function(req, res){
+  res.render('cloud')
+})
+
 
 ////////////////Rotas que nao necessitam de autenticação
 //Get's

@@ -234,11 +234,11 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 /* Sidebar Style */
 
 .sidebar-navigation {
-  width: 11%;
+  width: 14%;
   float: left;
   height: 100%;
   position: fixed;
-  background: url(../assets/img/tri2.png);
+  background: url(../assets/img/tri2.png) no-repeat left fixed;
   z-index: 10;
 }
 
@@ -248,41 +248,31 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
   font-size: 25px;
   color: #339966;
   text-align: center; 
+  line-height: center;
   border-bottom: 1px solid #fff; 
   line-height: 0.1em;
-  margin: 10px 0 20px;
-  width: 100%; 
-  margin-top: 15px;
+  margin-top: 20%;
 }
 
 .sidebar-navigation p span {
   text-align: center; 
   background:#fff; 
-  padding:0 10px; 
-}
-
-.sidebar-navigation nav {
-  margin-top:100px;
+  padding:0 10px;
   position: relative;
   top: 20%;
   left: 60%;
-  -webkit-transform: translateX(-60%) translateY(-60%);
-  -moz-transform: translateX(-60%) translateY(-60%);
-  -ms-transform: translateX(-60%) translateY(-60%);
-  -o-transform: translateX(-60%) translateY(-60%);
-  transform: translateX(-60%) translateY(-60%);
+  -webkit-transform: translateX(-60%)
 }
+
 
 .sidebar-navigation ul {
   color:#33ccff;
-  margin-top:20px;
-  margin-left: 45px;
+  margin: 0 auto;
   list-style: none;
-  padding: 0;
+  padding:10px 0px;
 }
 .sidebar-navigation li{
   margin-left:15px;
-  margin-top:10px;
   padding: 10px 0;
 }
 
@@ -293,7 +283,6 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 
 .sidebar-navigation nav a{
   display: inline-block;
-  margin-top: 5px;
   text-decoration: none!important;
   font-size: 15px;
   letter-spacing: 0.5px;

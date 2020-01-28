@@ -85,15 +85,14 @@ block content
                         if(mem._id==post.owner)
                           img.img-circle.avatar(src='/ficheiros/'+mem.foto alt='user profile image')
                     .pull-left.meta
-                      .title.h5
+                      .title.h2GOD
                         a(href='#')
                           each mem in members
                             if(mem._id==post.owner)
                              b=mem.name
-                        |                         publicou algo.
                       h6.text-muted.time= ("" + new Date(parseInt(post.date))).split('GMT')[0]
                   .post-description
-                    h4 Titulo: #{post.title}
+                    h4=post.title
 
                     p=post.text
                     .stats
@@ -125,14 +124,14 @@ block content
 
                           
                   .post-footer
-                    .input-group
-                      
-                        form(action=("/addComent?idP=" + post._id + '&idG=' +idG + '&idT=' + idT ) method="POST")
-                  
-                          input.form-control(placeholder='Add a comment' name="texto" type='text')
-                          button.btn.btn-icon.btn-primary(type='submit')
-                            span.btn-inner--icon
-                              i.fa.fa-edit
+                    form(action=("/addComent?idP=" + post._id + '&idG=' +idG + '&idT=' + idT ) method="POST")
+                      .input-group.mb-3
+                        input.form-control(type='text' placeholder="Add comment..." aria-label="Recipient's username" aria-describedby='button-addon2')
+                      .input-group-append
+                        button.button-addon.btn.btn-outline-primary(type='submit')
+                          span.btn-inner--icon
+                            i.fa.fa-edit
+
                   each comment in post.comments      
                     ul.comments-list
                       li.comment

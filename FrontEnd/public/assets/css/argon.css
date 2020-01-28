@@ -51,6 +51,35 @@
     position: relative;
     width: 100%;
     }
+
+    .status-upload button{
+        font-family: Cambria;
+        font-size: 15px;
+    }
+
+    .title h6{
+        font-family: Cambria;
+        font-size: 15px;
+    }
+
+    .post-description h4{
+        font-family: Arail Rounded MT Bold;
+    }
+
+    .post-description p{
+        font-family: Cambria;
+        font-size: 15px;
+    }
+
+    .stats{
+        font-family: Arail Rounded MT Bold;
+    }
+
+    .input-group .form-inline{
+        display: inline;
+        width: 50%;
+    }
+
     .status-upload {
     background: none repeat scroll 0 0 #f5f5f5;
     -webkit-border-radius: 4px;
@@ -75,8 +104,8 @@
     border-radius: 4px 4px 0 0;
     color: #777777;
     float: left;
-    font-family: Lato;
-    font-size: 14px;
+    font-family: Cambria;
+    font-size: 15px;
     height: 142px;
     letter-spacing: 0.3px;
     padding: 20px;
@@ -193,6 +222,16 @@
                     font-size: 1.5rem; } }
 
 /*POSTS*/
+
+button.input-group-addon {
+    position: absolute;
+    right: -38px;
+    top: 0;
+    padding: 2px;
+    z-index: 999;
+    height: 34px;
+    width: 38px;
+  }
 
 .panel-shadow {
     box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
@@ -331,6 +370,7 @@
 
 .h2GOD {
     color: green;
+    text-transform: uppercase;
 }
 .page-content{
     margin-left:20%;
@@ -2770,7 +2810,8 @@ pre code
 
 .form-control
 {
-    font-size: 1rem;
+    font-size: 15px;
+    font-family: Cambria;
     line-height: 1.5;
 
     display: block;
@@ -6338,9 +6379,9 @@ input[type='button'].btn-block
 
 .card-img-top
 {   
-    border: 1px solid #33ccff;
-    margin-top: 3px;
+    border: 1px solid;
     border-radius: 20px;
+    margin-top: 3px;
     max-width:100%;
     max-height:400px;
 }
