@@ -1,0 +1,11 @@
+{"_id":{"$oid":"5e29840b1cf6700e4c89e743"},"foto":"pathParaAFoto","friends":[],"groups":[],"privacidade":false,"email":"lel","name":"lel","password":"$2a$10$37wOMS163OV5tW7S41kRXOPoTglzPRFv6n43SZzq2vYU.dxRBpQrG","__v":0.0}
+{"_id":{"$oid":"5e2984e042d4660e9161b1dc"},"foto":"pathParaAFoto","friends":[],"groups":[],"privacidade":false,"email":"pp","name":"pp","password":"$2a$10$0Utp0Agd8c0rd01UASwU5.aBs0v54D6VBQPCXfQUmJhjMLCd/zXVu","__v":0}
+{"_id":{"$oid":"5e298795e67bbc0ee22a9be3"},"foto":"pathParaAFoto","friends":[],"groups":[],"privacidade":false,"email":"1","name":"1","password":"$2a$10$0npJ9bOi.PIYjKrkD6hTyucvbdZ1e6hPhoumFm8A/ImSt2l/3YDxq","__v":0}
+{"_id":{"$oid":"5e29a3ef636ca512ffd7ae79"},"foto":"pathParaAFoto","friends":[],"groups":[],"privacidade":false,"email":"12","name":"12","password":"$2a$10$3xcVLvyBB.jsukvC8CD5p.NY0GEzkue.tuGkDsQA38zxbIu0RTg9W","__v":0}
+{"_id":{"$oid":"5e29ce27e97b49143b856d23"},"foto":"pathParaAFoto","friends":[{"$oid":"5e29a3ef636ca512ffd7ae79"}],"groups":[],"privacidade":false,"email":"emailTop","name":"nomeTop","password":"$2a$10$RuM.gjcdB4wPeVGLejUDVOHqXGzKOLmSClLgHgNVQMEjNFbxf5SK.","__v":0}
+{"_id":{"$oid":"5e2aef1c9505e92c03bde1f4"},"foto":"istoAindaVaiSerMelhorDefinido","friends":[],"groups":[],"email":"qwert","name":"qwert","password":"$2a$10$tuX6Z4H7OMAXaD8ToHiHwugCiymCbuZOl6xlpipYIdp6p2Veurxza","__v":0}
+{"_id":{"$oid":"5e2af5cd520bbd03b650ab31"},"email":"kapa","nome":"kapa","password":"$2a$10$LgplquaxBBQ33fFAShLRA.Z6K5pr0qHg1479jYvMdusPCkVQmTIIW","__v":0}
+{"_id":{"$oid":"5e2af8a90b513a05912e25b3"},"email":"zz","nome":"zz","password":"$2a$10$bllpuukgWiFFkbptNuVz3.yWwvuzZKZuxrkigxiMkxWydy9nGRR3K","__v":0}
+{"_id":{"$oid":"5e2b0577c382d00a3623576a"},"foto":"istoAindaVaiSerMelhorDefinido","friends":[],"groups":[],"email":"ines","name":"ines","password":"$2a$10$Uo/ZS8NX87pLRVj4BZ5we.poaOoodwm7PtI.aVrbB4I4iQ3aS6FBW","__v":0}
+{"_id":{"$oid":"5e2b0705c382d00a3623576b"},"foto":"istoAindaVaiSerMelhorDefinido","friends":[],"groups":[],"email":"yay@mail.com","name":"yay","password":"$2a$10$VmVv4FYl7QSrtWJeXW9bP.Lafjj1l4mQd3RxNsS9sqPP0NUjtHa02","__v":0}
+{"_id":{"$oid":"5e2b36b04beefa0d61d1e755"},"foto":"istoAindaVaiSerMelhorDefinido","friends":[],"groups":[],"email":"lll@","name":"lll","password":"$2a$10$JVGzSTfuXufPoTE8COJx.uI5vKdwm.CaexA4c8zj09TFZBF2EH2em","__v":0}

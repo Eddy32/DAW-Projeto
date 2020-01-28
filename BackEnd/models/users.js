@@ -7,12 +7,20 @@ var usersSchema = new mongoose.Schema({
     email: {type: String, required:true},
     password: {type: String, required: true},
     gender: String,
-    foto: { type: String, default: 'istoAindaVaiSerMelhorDefinido'},
+    foto: { type: String, default: 'male.png'},
     bio: {type: String, default: "Parece que este utilizador gosta de manter um certo mistério em relção a si :)"},
-    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
-    groups: [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}]//,
+    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]//,
+    //groups: [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}]//,
     //privacidade: {type: Boolean, default: false}, <- cena para o futuro
   });
+
+
+  usersSchema.pre("save",function(next) {
+    if(this.gender == "female")
+      this.foto = "female.png"
+    next();
+  });
+
 
 
 

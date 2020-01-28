@@ -66,9 +66,13 @@ block content
             .row
                 .col-md-3
                     .text-center
-                        img.avatar.img-circle(src='//placehold.it/100' alt='avatar')
+                        img.avatar-lg.img-circle(src='/ficheiros/'+ user.foto alt='avatar')
                         h6 Upload a different photo...
-                        input.form-control(type='file')
+                        form(action=("/users/" + user._id + "/changeFoto") method="POST" enctype="multipart/form-data" )
+                          input.w3-input.w3-cell(type="file" name="foto")
+                          button.btn(type='submit' )
+                            i.fa.fa-share
+                            |  Publicar
 
                 .col-md-9.personal-info
                     .alert.alert-info.alert-dismissable

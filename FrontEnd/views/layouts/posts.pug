@@ -65,16 +65,14 @@ block content
           .col-md-6
             .widget-area.no-padding.blank
               .status-upload
-                form(action=("/addPost?idT=" + idT + '&idG=' + idG) method="POST")
+                form(action=("/addPost?idT=" + idT + '&idG=' + idG) method="POST" enctype="multipart/form-data" )
                   input.form-control(type='text' name="title" required="" placeholder="Título" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
                   textarea(placeholder='What are you thinking?' name="text" type="text" required="")
                   input.form-control(type='text' name="hashtag" placeholder="Hashtags" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
                   button.btn(type='submit' )
                     i.fa.fa-share
                     |  Publicar
-                  button.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                    i.fa.fa-globe
-                    | Público
+                  input.w3-input.w3-cell(type="file" name="ficheiro")
 
         .containerPosts
           .col-sm-8
@@ -83,7 +81,9 @@ block content
                 .singlePost
                   .post-heading
                     .pull-left.image
-                      img.img-circle.avatar(src='http://bootdey.com/img/Content/user_1.jpg' alt='user profile image')
+                      each mem in members
+                        if(mem._id==post.owner)
+                          img.img-circle.avatar(src='/ficheiros/'+mem.foto alt='user profile image')
                     .pull-left.meta
                       .title.h5
                         a(href='#')
@@ -94,12 +94,36 @@ block content
                       h6.text-muted.time= ("" + new Date(parseInt(post.date))).split('GMT')[0]
                   .post-description
                     h4 Titulo: #{post.title}
+
                     p=post.text
                     .stats
-                      form(action=('http://localhost:5004/groups/' + idG + '/topics/' + idT + '/likePost/' + post._id + '?user=' +  user._id ) method="POST")
-                        button.btn.btn-icon.btn-primary(type='submit')
-                          span.btn-inner--icon
-                            i.ni.ni-favourite-28  #{post.NumLikes}
+                      .row
+                        .col-sm-1
+                          form(action=('http://localhost:5004/groups/' + idG + '/topics/' + idT + '/likePost/' + post._id + '?user=' +  user._id ) method="POST")
+                            button.btn.btn-icon.btn-primary(type='submit')
+                              span.btn-inner--icon
+                                i.ni.ni-favourite-28  #{post.NumLikes}
+                        .col-sm-1
+                          if(post.ficheiroName)
+                    
+                            button.btn.btn-primary(type='button' data-toggle='modal' data-target='#exampleModal') Ver Anexo
+
+                            // Modal
+                            #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+                              .modal-dialog.modal-dialog-centered(role='document')
+                                .modal-content
+                                  .modal-header
+                                    h5#exampleModalLabel.modal-title Dados do Grupo a Criar
+                                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                      span(aria-hidden='true') &times;
+                                  .modal-body
+                                       img.card-img-top(src='/ficheiros/' + post.ficheiroName alt='Card image cap')    
+
+                                  .modal-footer
+                                    button.btn.btn-success(type='button' data-dismiss='modal') Cancelar
+                                              
+
+                          
                   .post-footer
                     .input-group
                       

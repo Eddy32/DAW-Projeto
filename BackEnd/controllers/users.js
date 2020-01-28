@@ -45,7 +45,18 @@ module.exports.inserir = u => {
     return novo.save()
 }
 
-//
+// achange user foto
+module.exports.changeFoto = (id,foto) => {
+    return Utilizador
+        .update({_id: id},
+                {$set: 
+                    {foto:foto}
+                }
+                )
+        .exec()
+}
+
+
 
 
 
