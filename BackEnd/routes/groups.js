@@ -9,6 +9,13 @@ router.get('/', function(req, res) {
       .catch(e => res.status(500).jsonp(e)) 
 });
 
+
+router.get('/fromUser/:id', function(req, res) {
+  Groups.groupsByUser(req.params.id)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+});
+
 router.get('/:id', function(req, res) {
   Groups.consultar(req.params.id)
     .then(dados => res.jsonp(dados))
@@ -122,5 +129,8 @@ router.post('/:id/addPost', function(req,res){
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
 });
+
+
+
 
 module.exports = router;

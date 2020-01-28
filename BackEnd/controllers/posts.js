@@ -66,6 +66,16 @@ module.exports.addFile = (idP,file) => {
 }
 
 
+//todos os posts com uma hashtag
+module.exports.withHashtag = hashtg => {
+    return Post
+        .find({hashtag: hashtg})
+        .exec()
+}
+
+
+
+
 //remove Comment
 module.exports.removeComment = (idP,idC) => {
     return Post.update(

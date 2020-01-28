@@ -50,6 +50,35 @@ router.get('/:email', passport.authenticate('jwt', {session: false}), function(r
 });
 
 
+//aceita pedido para grupo
+router.post('/:id/accpetRequest',function(req,res){
+  var idA = req.query.membro
+  Utilizadores.acceptFriendRequest(req.params.id,idA)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+}
+);
+
+//coloca pedido para grupo
+router.post('/:id/addRequest',function(req,res){
+  var idA = req.query.membro
+  Utilizadores.addFriendRequest(req.params.id,idA)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+}
+);
+
+//nega pedido
+router.post('/:id/denyRequest',function(req,res){
+  var idA = req.query.membro
+  Utilizadores.denyFriendRequest(req.params.id,idA)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+
+});
+
+
+
 router.post('/', function(req,res){
   Utilizadores.inserir(req.body)
     .then(dados => res.jsonp(dados))

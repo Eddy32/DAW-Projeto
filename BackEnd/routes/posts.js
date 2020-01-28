@@ -17,13 +17,13 @@ router.get('/', function(req, res) {
   } 
 });
 
-
-//obter um post por id
-router.get('/:id', function(req, res) {
-  Posts.consultar(req.params.id)
+//post with hashtag
+router.get('/byHashtag', function(req,res){
+  var hashtg = req.query.hashtag;
+  Posts.withHashtag(hashtg)
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
-});
+})
 
 //like no post
 router.get('/byTopic/:id', function(req, res) {
@@ -38,6 +38,17 @@ router.get('/byTopic/:id', function(req, res) {
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
 });
+
+
+//obter um post por id
+router.get('/:id', function(req, res) {
+  Posts.consultar(req.params.id)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+});
+
+
+
 
 //--------------------------------------------------POST
 
@@ -85,6 +96,7 @@ router.post('/:id/addComment', function(req,res){
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
 })
+
 
 
 

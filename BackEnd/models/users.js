@@ -9,6 +9,7 @@ var usersSchema = new mongoose.Schema({
     gender: String,
     foto: { type: String, default: 'male.png'},
     bio: {type: String, default: "Parece que este utilizador gosta de manter um certo mistério em relção a si :)"},
+    pendent: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]//,
     //groups: [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}]//,
     //privacidade: {type: Boolean, default: false}, <- cena para o futuro

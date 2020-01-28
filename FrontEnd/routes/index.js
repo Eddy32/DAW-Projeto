@@ -72,6 +72,7 @@ router.get('/profile', function(req, res){
        .catch(e => res.render('error', {error: e}))*/
 })
 
+
 router.get('/users/:idU/editProfile', verificaAutenticacao, function(req, res){
   console.log("mipeeee")
   axios.get('http://localhost:5003/utilizadores/byID/'+ req.params.idU)
@@ -79,7 +80,19 @@ router.get('/users/:idU/editProfile', verificaAutenticacao, function(req, res){
    //acho que é preciso fazer um post para isto
 })
 
+router.get('/checkProfile/:idU', verificaAutenticacao, function(req, res){
+  axios.get('http://localhost:5003/utilizadores/byID/'+ req.params.idU)
+       .then(dados => res.render('verProfile', {user:req.user, utilizador: dados.data}))
+   //acho que é preciso fazer um post para isto
+})
 
+
+
+router.get('/hashtag', verificaAutenticacao, function(req, res){
+  //axios.get('http://localhost:5003/utilizadores/byID/'+ req.params.idU) ha de precisar para fazer o wordcloud
+    //   .then(dados => res.render('layouts/editProfile', {user:req.user}))
+  res.render("hastag");
+})
 
 
 
@@ -263,12 +276,24 @@ router.get('/groups/:idG/topic/:idT',verificaAutenticacao, function(req, res){
     //res.render('layouts/groups') 
   })
 
+router.get('/user/:id/viewRequests', verificaAutenticacao, function(req, res){
+  if(req.user.pendent.length>0){
+    axios.get('http://localhost:5003/utilizadores/multiple?array=' + req.user.pendent )
+      .then(dados => res.render('friendsRequests', {lista: dados.data, user: req.user}))
+    .catch(e => res.render('error', {error: e}))
+  }
+  else 
+    res.render('friendsRequests', {lista: [], user: req.user})
+
+})
+
 
 router.get('/addPost', verificaAutenticacao, function(req, res){
   res.render('layouts/createPost')
 })
 
 //------------------------------------------------------------------Post's
+
 //autenticar no sistema
 router.post('/login', passport.authenticate('local', 
 { successRedirect: '/feed',
@@ -290,6 +315,51 @@ axios.post('http://localhost:5003/utilizadores', {
   .then(dados => res.redirect('/'))
   .catch(e => res.render('error', {error: e}))
 })
+
+//get Hashtags
+router.post('/getPostsHashtag', function(req,res){
+  var hashtg = req.body.hashtg;
+
+  axios.get('http://localhost:5003/groups/fromUser/'+ req.user._id)
+    .then(groups => {
+      axios.get('http://localhost:5003/posts/byHashtag?hashtag='+ hashtg)
+        .then(posts => {
+          res.render('showPostsHashtag', { grupos: groups.data, postes: posts.data })
+        })
+        .catch(erro => {
+          res.render('error',{error: erro})
+        })
+    })
+    .catch(erro => {
+      res.render('error',{error: erro})
+    })
+  })
+
+//adicionar pedido de amizade
+router.post('/user/:idU/addRequest', function(req,res){
+  var user = req.query.member;
+  axios.post('http://localhost:5003/utilizadores/' + req.params.idU + '/addRequest?membro=' + user )
+    .then(dados => res.redirect('/checkProfile/' + req.params.idU))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//aceita pedido de amizade
+router.post('/user/:idU/acceptMember', function(req,res){
+  var user = req.query.member;
+  axios.post('http://localhost:5003/utilizadores/' + req.params.idU + '/accpetRequest?membro=' + user )
+    .then(dados => res.redirect('/user/'+req.user._id + '/viewRequests' ))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+//rejeita pedido de amizade 
+router.post('/user/:idU/denyMember', function(req,res){
+  var user = req.query.member;
+  axios.post('http://localhost:5003/utilizadores/' + req.params.idU + '/denyRequest?membro=' + user )
+    .then(dados => res.redirect('/user/'+req.user._id + '/viewRequests' ))
+    .catch(e => res.render('error', {error: e}))
+  })
+
+
 
 ////Grupos
 //remover um user de um grupo
@@ -348,32 +418,50 @@ router.post('/criaGrupo', function(req,res){
 
 router.post('/addPost', upload.single('ficheiro'), function(req,res){
 
-  let oldPath = __dirname + '/../' + req.file.path
-  let newPath = __dirname + '/../public/ficheiros/' + req.file.originalname
+  if(req.file){
+    let oldPath = __dirname + '/../' + req.file.path
+    let newPath = __dirname + '/../public/ficheiros/' + req.file.originalname
 
-  console.log("PATH ANTIGO : " + oldPath + "PATH NOVO: " + newPath)
+    console.log("PATH ANTIGO : " + oldPath + "PATH NOVO: " + newPath)
 
-  fs.rename(oldPath, newPath, function (err) {
-    if (err) throw err
-  })
+    fs.rename(oldPath, newPath, function (err) {
+      if (err) throw err
+    })
+
+    var hashtagz = req.body.hashtag.split('#')
+    hashtagz.shift();
+    axios.post('http://localhost:5003/posts', {
+    title: req.body.title,
+    text: req.body.text,
+    hashtag: hashtagz,
+    idTopic: req.query.idT,
+    idGroup: req.query.idG,
+    owner: req.user._id,
+    ficheiroName: req.file.originalname,
+    ficheiroMimeType: req.file.mimetype,
+    ficheiroSize: req.file.size
+    })
+      .then(dados => res.redirect('/groups/' + req.query.idG + '/topic/' + req.query.idT))
+      .catch(e => res.render('error', {error: e}))
+  }
+  else{
+    var hashtagz = req.body.hashtag.split('#')
+    hashtagz.shift();
+    axios.post('http://localhost:5003/posts', {
+    title: req.body.title,
+    text: req.body.text,
+    hashtag: hashtagz,
+    idTopic: req.query.idT,
+    idGroup: req.query.idG,
+    owner: req.user._id
+    })
+      .then(dados => res.redirect('/groups/' + req.query.idG + '/topic/' + req.query.idT))
+      .catch(e => res.render('error', {error: e}))
+
+  }
 
 
 
-  console.log("WHY WHY" + req.body.hashtag + " --- " + req.body.title)
-  var hashtagz = req.body.hashtag.split('#')
-  hashtagz.shift();
-  axios.post('http://localhost:5003/posts', {
-   title: req.body.title,
-   text: req.body.text,
-   hashtag: hashtagz,
-   idTopic: req.query.idT,
-   owner: req.user._id,
-   ficheiroName: req.file.originalname,
-   ficheiroMimeType: req.file.mimetype,
-   ficheiroSize: req.file.size
-  })
-    .then(dados => res.redirect('/groups/' + req.query.idG + '/topic/' + req.query.idT))
-    .catch(e => res.render('error', {error: e}))
 })
 
 router.post('/addComent', function(req,res){
@@ -476,7 +564,7 @@ router.post('/users/:idU/changeFoto', upload.single('foto'),  function(req,res){
     .catch(e => res.render('error', {error: e}))
   })
   
-  
+
 
 
 

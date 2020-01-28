@@ -96,6 +96,17 @@ module.exports.acceptRequest = (idG,idU) => {
       );
 }
 
+//todos os grupos de um user
+module.exports.groupsByUser = idU => {
+    return Group
+        .find(
+            {users: idU}
+            )
+        .exec()
+
+}
+
+
 
 
 
