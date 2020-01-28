@@ -3,6 +3,12 @@ var router = express.Router();
 var axios = require('axios')
 var passport = require('passport')
 var bcrypt = require('bcryptjs')
+const fs = require('fs')
+
+
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
 
 ////////////////Rotas que nao necessitam de autenticação
 //Get's
@@ -336,7 +342,20 @@ router.post('/criaGrupo', function(req,res){
   })
 
 
-router.post('/addPost', function(req,res){
+router.post('/addPost', upload.single('ficheiro'), function(req,res){
+
+  let oldPath = __dirname + '/../' + req.file.path
+  let newPath = __dirname + '/../public/ficheiros/' + req.file.originalname
+
+  console.log("PATH ANTIGO : " + oldPath + "PATH NOVO: " + newPath)
+
+  fs.rename(oldPath, newPath, function (err) {
+    if (err) throw err
+  })
+
+
+
+  console.log("WHY WHY" + req.body.hashtag + " --- " + req.body.title)
   var hashtagz = req.body.hashtag.split('#')
   hashtagz.shift();
   axios.post('http://localhost:5003/posts', {
@@ -344,7 +363,10 @@ router.post('/addPost', function(req,res){
    text: req.body.text,
    hashtag: hashtagz,
    idTopic: req.query.idT,
-   owner: req.user._id
+   owner: req.user._id,
+   ficheiroName: req.file.originalname,
+   ficheiroMimeType: req.file.mimetype,
+   ficheiroSize: req.file.size
   })
     .then(dados => res.redirect('/groups/' + req.query.idG + '/topic/' + req.query.idT))
     .catch(e => res.render('error', {error: e}))
@@ -429,6 +451,27 @@ router.post('/groups/:idG/demoteAdmin/:idU', function(req,res){
   })
 
 
+//change user photo
+router.post('/users/:idU/changeFoto', upload.single('foto'),  function(req,res){
+
+  let oldPath = __dirname + '/../' + req.file.path
+  let newPath = __dirname + '/../public/ficheiros/' + req.file.originalname
+
+
+  fs.rename(oldPath, newPath, function (err) {
+    if (err) throw err
+  })
+
+
+
+
+  var foto = req.file.originalname
+  console.log("NOME DO FICHEIRO " + foto)
+  axios.post('http://localhost:5003/utilizadores/' + req.user._id + '/changeFoto?foto=' + foto  )
+    .then(dados => res.redirect('/users/'+req.params.idU+'/editProfile'))
+    .catch(e => res.render('error', {error: e}))
+  })
+  
   
 
 

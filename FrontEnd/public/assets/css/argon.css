@@ -17201,7 +17201,13 @@ a.text-lighter:focus
     width: 58px;
     height: 58px;
 }
+.avatar-lg
+{
+    font-size: .875rem;
 
+    width: 150px;
+    height: 150px;
+}
 .avatar-sm
 {
     font-size: .875rem;
