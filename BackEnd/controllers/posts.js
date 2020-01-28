@@ -55,6 +55,17 @@ module.exports.addComment = (idP,comment) => {
     .exec()
 }
 
+//inserir novo ficheiro
+module.exports.addFile = (idP,file) => {
+    return Post
+    .update(
+        { _id: idP },
+        { $set: { ficheiro: file } }
+      )
+    .exec()
+}
+
+
 //remove Comment
 module.exports.removeComment = (idP,idC) => {
     return Post.update(

@@ -8,6 +8,7 @@ var commentsSchema = new mongoose.Schema({
   date: {type: String, default: new Date().getTime()}
 });
 
+
 var postsSchema = new mongoose.Schema({
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
     idTopic: {type: mongoose.Schema.Types.ObjectId, ref: 'topics', required: true},
@@ -18,6 +19,9 @@ var postsSchema = new mongoose.Schema({
     likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
     NumLikes: {type: Number, default: 0},
     comments: [commentsSchema],
+    ficheiroName: String,
+    ficheiroMimeType: String,
+    ficheiroSize: Number,
     date: {type: String, default: new Date()},
     group: String
   });

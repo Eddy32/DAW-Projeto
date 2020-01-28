@@ -70,15 +70,21 @@ router.post('/:id/like/:idU', function(req,res){
 })
 
 
-
-//add comment ao post
-router.post('/:id/addComment', function(req,res){
-  console.log("MOSTRA BODY: " + req.body + "DADO: " + req.body.owner)
-  Posts.addComment(req.params.id,req.body)
+//add ficheiro ao post
+router.post('/:id/addFile', function(req,res){
+  Posts.addFile(req.params.id,req.body)
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
 })
 
+
+
+//add comment ao post
+router.post('/:id/addComment', function(req,res){
+  Posts.addComment(req.params.id,req.body)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+})
 
 
 

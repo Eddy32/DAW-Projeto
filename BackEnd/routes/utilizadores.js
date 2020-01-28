@@ -34,6 +34,13 @@ router.get('/multiple', function(req, res) {
     .catch(e => res.status(500).jsonp(e))
 });
 
+router.post('/changeFoto/:idU', function(req,res){
+  var foto = req.query.foto;
+  Utilizadores.changeFoto(req.params.idU,foto)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+})
+
 
 router.get('/:email', passport.authenticate('jwt', {session: false}), function(req, res) {
   console.log("WTFFF")
@@ -48,6 +55,14 @@ router.post('/', function(req,res){
     .then(dados => res.jsonp(dados))
     .catch(e => res.status(500).jsonp(e))
 })
+
+router.post('/:idU/changeFoto', function(req,res){
+  var foto = req.query.foto;
+  Utilizadores.changeFoto(req.params.idU,foto)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+})
+
 
 router.get('/byID/:id', function(req, res) {
   Utilizadores.consultarID(req.params.id)
