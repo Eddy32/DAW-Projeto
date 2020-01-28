@@ -1,35 +1,33 @@
 extends layout
 
 block content
-  .sidebar-navigation.hidde-sm
-          p.text-gray.font-weight-bold.text-uppercase.px-3.small.pb-4.mb-0 Menu
+  .sidebar-navigation
+          p.span Personal
           nav
             ul
               li
                 a(href='/feed')
-                  span.rect
-                  span.circle
+                  span.glyphicon.glyphicon-home
                   |                             Home
               li
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
                 a(href='/groups')
-                  span.rect
-                  span.circle
-                  |                             Groups
-              li
-                a(href='#projects')
-                  span.rect
-                  span.circle
-                  |                             Recent Work
-              li
-                a(href='#video')
-                  span.rect
-                  span.circle
-                  |                             Presentation
-              li
-                a(href='#blog')
-                  span.rect
-                  span.circle
-                  |                             Blog Entires
+                  span.glyphicon.glyphicon-th-large
+                  |                             Grupos
+            p.span App
+              ul
+                li
+                    a(href='#projects')
+                        span.glyphicon.glyphicon-heart
+                        |                             Amigos
+
+                li
+                    a(href='#blog')
+                        span.glyphicon.glyphicon-question-sign
+                        |                             Quem somos?
   .hero-image
       ul.nav.navbar-nav.navbar-right
         li

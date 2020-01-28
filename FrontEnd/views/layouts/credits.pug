@@ -9,26 +9,41 @@ block content
                 a(href='/feed')
                   span.glyphicon.glyphicon-home
                   |                             Home
-              li              
+              li
                 a(href='/profile')
                   span.glyphicon.glyphicon-user
                   |                             Perfil
               li
-                a(href='/groups')
-                  span.glyphicon.glyphicon-th-large
-                  |                             Grupos
+                a(href='#projects')
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
             p.span App
               ul
+                
                 li
-                    a(href='#projects')
-                        span.glyphicon.glyphicon-heart
-                        |                             Amigos
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
 
                 li
-                    a(href='/credits')
-                        span.glyphicon.glyphicon-question-sign
-                        |                             Quem somos?
-            
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
 
     .hero-image
       ul.nav.navbar-nav.navbar-right
@@ -41,7 +56,8 @@ block content
             .avatar  Avatar
 
     .titulo
-        h2 AMAZE ME PLZ
+        h2 Mr. Book
+
 
     .page-content
         #teachers-section.site-section
@@ -50,7 +66,7 @@ block content
                     .col-lg-7.mb-5.text-center(data-aos='fade-up' data-aos-delay='')
                         h2.section-title Quem somos?
                         p.mb-5
-                            | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
+          
                 .row
                     .col-md-6.col-lg-4.mb-4(data-aos='fade-up' data-aos-delay='100')
                         .teacher.text-center
@@ -62,7 +78,7 @@ block content
                                     | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
                     .col-md-6.col-lg-4.mb-4(data-aos='fade-up' data-aos-delay='200')
                         .teacher.text-center
-                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='images/person_2.jpg' alt='Image')
+                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='assets/img/eddy.jpg' alt='Image')
                             .py-2
                                 h3.text-black Pedro Lima
                                 p.position MiEI
@@ -70,7 +86,7 @@ block content
                                     | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
                     .col-md-6.col-lg-4.mb-4(data-aos='fade-up' data-aos-delay='300')
                         .teacher.text-center
-                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='images/person_3.jpg' alt='Image')
+                            img.img-fluid.w-50.rounded-circle.mx-auto.mb-4(src='assets/img/squirtle.png' alt='Image')
                             .py-2
                                 h3.text-black Ricardo Pereira
                                 p.position MiEI

@@ -6,25 +6,44 @@ block content
           nav
             ul
               li
+                a(href='/feed')
+                  span.glyphicon.glyphicon-home
+                  |                             Home
+              li
                 a(href='/profile')
                   span.glyphicon.glyphicon-user
                   |                             Perfil
               li
-                a(href='/groups')
-                  span.glyphicon.glyphicon-th-large
-                  |                             Grupos
+                a(href='#projects')
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
             p.span App
               ul
+                
                 li
-                    a(href='#projects')
-                        span.glyphicon.glyphicon-heart
-                        |                             Amigos
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
 
                 li
-                    a(href='#blog')
-                        span.glyphicon.glyphicon-question-sign
-                        |                             Quem somos?
-            
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
 
     .hero-image
       ul.nav.navbar-nav.navbar-right
@@ -37,7 +56,7 @@ block content
             .avatar  Avatar
 
     .titulo
-        h2 AMAZE ME PLZ
+        h2 Mr. Book
 
     .page-content
-        p somos todos amigos crl
+        p

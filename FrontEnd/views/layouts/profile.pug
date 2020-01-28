@@ -1,33 +1,91 @@
 extends ../layout
 
 block content
+    .sidebar-navigation
+          p.span Personal
+          nav
+            ul
+              li
+                a(href='/feed')
+                  span.glyphicon.glyphicon-home
+                  |                             Home
+              li
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
+              li
+                a(href='#projects')
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
+            p.span App
+              ul
+                
+                li
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
 
-    .card.card-profile
-        img.card-img-top(src='../../assets/img/banner.png' alt='Image placeholder')
-        .row.justify-content-center
-            .col-lg-3.order-lg-2
-                .card-profile-image
-                    a(href='/profile/'+user._id)
-                        if (foto!="")
-                            img.rounded-circle(src=user.foto)
-                        else
-                            img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
-        .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4
-            .d-flex.justify-content-between
-                a.btn.btn-sm.btn-info.mr-4(href='http://localhost:5004/users/'+user._id+'/editProfile') Editar perfil
-                a.btn.btn-sm.btn-default.float-right(href='#') Mensagens
-        .card-body.pt-0
-            .row(style="padding-top:60px")
-                .col
-                    .card-profile-stats.d-flex.justify-content-center
-                        div
-                            span.heading=user.friends.length
-                            span.description Amigos
-                        div
-                            span.heading=nrGrupos
-                            span.description Grupos
-            .text-center
-                h5.h3=user.name
-                    span.font-weight-light=user.dateBirth
-                .h5.font-weight-300
-                    i.ni.location_pin.mr-2=user.bio
+                li
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
+
+    .hero-image
+      ul.nav.navbar-nav.navbar-right
+        li
+          a
+            span.glyphicon.glyphicon-inbox
+              |  Mensagens
+        li
+          a(href='#')
+            .avatar  Avatar
+
+    .titulo
+        h2 Mr. Book
+
+        
+    .page-content
+        .card.card-profile
+            img.card-img-top(src='../../assets/img/banner.png' alt='Image placeholder')
+            .row.justify-content-center
+                .col-lg-3.order-lg-2
+                    .card-profile-image
+                        a(href='/profile/'+user._id)
+                            if (foto!="")
+                                img.rounded-circle(src=user.foto)
+                            else
+                                img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
+            .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4
+                .d-flex.justify-content-between
+                    a.btn.btn-sm.btn-info.mr-4(href='http://localhost:5004/users/'+user._id+'/editProfile') Editar perfil
+                    a.btn.btn-sm.btn-default.float-right(href='#') Mensagens
+            .card-body.pt-0
+                .row(style="padding-top:60px")
+                    .col
+                        .card-profile-stats.d-flex.justify-content-center
+                            div
+                                span.heading=user.friends.length
+                                span.description Amigos
+                            div
+                                span.heading=nrGrupos
+                                span.description Grupos
+                .text-center
+                    h5.h3=user.name
+                        span.font-weight-light=user.dateBirth
+                    .h5
+                        i.ni.location_pin.mr-2=user.bio

@@ -1,44 +1,34 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  meta(http-equiv='X-UA-Compatible' content='ie=edge')
-  title Sign Up
+extends ../layout
 
-  link(rel='stylesheet' href='../public/assets/fonts/material-icon/css/material-design-iconic-font.min.css')
-  link(href='/css/register.css', rel='stylesheet')
-
-body
-
-.main
-  section.signup
+block content
+  section.login-block
     .container
-      .signup-content
-        .signup-form
-          h2.form-title Sign up
-          form#register-form.register-form(action="/reg" method='POST')
+      .row
+        .col-md-4.login-sec
+          h2.text-center Registar
+          form.login-form(action="/reg" method='POST')
             .form-group
-              label(for='name')
-                i.zmdi.zmdi-account.material-icons-name
-              input#name(type='text' name='name' placeholder='Your Name')
+              label(for='exampleInputEmail1') Nome de Utilizador
+              input.form-control(type='text' name='name' placeholder='Your Name')
             .form-group
-              label(for='email')
-                i.zmdi.zmdi-email
-              input#email(type='text' name='email' placeholder='Your Email')
+              label(for='exampleInputEmail1') Email
+              input.form-control(type='text' name='email' placeholder='Your Email')
             .form-group
-              label(for='pass')
-                i.zmdi.zmdi-lock
-              input#pass(type='password' name='password' placeholder='Password')
+              label(for='exampleInputPassword1') Password
+              input.form-control(type='password' name='password' placeholder='Password')
             .form-group
-              input#agree-term.agree-term(type='checkbox' name='agree-term')
-              label.label-agree-term(for='agree-term')
-                span
-                  span
-                | I agree all statements in  
-                a.term-service(href='#') Terms of service
-            .form-group.form-button
-              input#signup.form-submit(type='submit' name='signup' value='Register')
-        .signup-image
-          figure
-            img(src='img/signup-image.jpg' alt='sing up image')
-          a.signup-image-link(href='login') I am already member
+              label(for='exampleInputPassword1') Género
+              select.form-control(data-toggle='select' name="gender" data-placeholder='Disabled results')
+                option(value='male') Masculino
+                option(value='female') Feminino
+
+            button.btn.btn-login.float-right(type='submit' name='signup' value='Register') Registar
+
+            a(href='login') Já está registado?
+
+        .col-md-8.banner-sec
+              img.d-block.img-fluid(src='../assets/img/rip.jpg')
+              .banner-text
+                h2 Welcome!
+                p
+                  | intro engraçada para toda a gente ficar contente eheh

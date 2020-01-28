@@ -1,48 +1,62 @@
 extends ../layout
 
 block content
-  .sidebar-navigation.hidde-sm
-          p.text-gray.font-weight-bold.text-uppercase.px-3.small.pb-4.mb-0 Menu
+  .sidebar-navigation
+          p.span Personal
           nav
             ul
               li
                 a(href='/feed')
-                  span.rect
-                  span.circle
+                  span.glyphicon.glyphicon-home
                   |                             Home
               li
-                a(href='/groups')
-                  span.rect
-                  span.circle
-                  |                             Groups
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |                             Perfil
               li
                 a(href='#projects')
-                  span.rect
-                  span.circle
-                  |                             Recent Work
-              li
-                a(href='#video')
-                  span.rect
-                  span.circle
-                  |                             Presentation
-              li
-                a(href='#blog')
-                  span.rect
-                  span.circle
-                  |                             Blog Entires
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
+            p.span App
+              ul
+                
+                li
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
+
+                li
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
+
   .hero-image
-      ul.nav.navbar-nav.navbar-right
-        li
-          a(src='assets/vendor/nucleo/fonts/ic_inbox_24px.svg')
-            span.glyphicon.glyphicon-user
-              |  Avatar
-        li
-          a(href='#')
-            span.glyphicon.glyphicon-log-in
-              |  Login
+    ul.nav.navbar-nav.navbar-right
+      li
+        a
+          span.glyphicon.glyphicon-inbox
+          |  Mensagens
+      li
+        a(href='#')
+          .avatar  Avatar
 
   .titulo
-        h2 amaze me pls
+    h2 Mr. Book
 
   ////////////PAGINA EM SI      
 
@@ -50,7 +64,7 @@ block content
 
     .row
       .col-sm-9
-        form.w3-container(action="http://localhost:5004/groups/"  method="GET")
+        .form-inline.w3-container(action="http://localhost:5004/groups/"  method="GET")
 
           select.form-control(data-toggle='select' class="form-control" data-placeholder='Disabled results')
             each grupo in lista
@@ -61,7 +75,7 @@ block content
                   if(!grupo.needRequest)
                      option= grupo.name
       
-          button.btn.btn-success(type='submit') Criar
+          button.btn(type='submit') Criar
 
     .row-edit
       .card-columns
@@ -133,7 +147,7 @@ block content
 
     .row
                 .col-sm-6
-                  button.btn.btn-success(type='button' data-toggle='modal' data-target='#exampleModal') Criar Grupo
+                  button.btn(type='button' data-toggle='modal' data-target='#exampleModal') Criar Grupo
 
                   // Modal
                   #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -167,7 +181,7 @@ block content
 
 
 
-    form(action='http://localhost:5004/' method="GET")
+  //-  .form-inline.w3-container(href='/feed' method="GET")
         button.btn.btn-info(type='submit') Página Inicial
   /////
                   

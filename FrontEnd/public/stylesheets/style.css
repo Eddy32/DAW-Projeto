@@ -234,24 +234,25 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 /* Sidebar Style */
 
 .sidebar-navigation {
-  width: 15%;
+  width: 11%;
   float: left;
   height: 100%;
   position: fixed;
-  background: url(../assets/img/green.png);
+  background: url(../assets/img/tri2.png);
   z-index: 10;
 }
 
 .sidebar-navigation p{
-  font-family: "Lucida Console", Monaco, monospace;
-  font-weight: bold;
-  font-size: medium;
-  color: white;
+  font-family: Arial Rounded MT Bold;
+  font-style: italic;
+  font-size: 25px;
+  color: #339966;
   text-align: center; 
   border-bottom: 1px solid #fff; 
   line-height: 0.1em;
   margin: 10px 0 20px;
   width: 100%; 
+  margin-top: 15px;
 }
 
 .sidebar-navigation p span {
@@ -261,6 +262,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 }
 
 .sidebar-navigation nav {
+  margin-top:100px;
   position: relative;
   top: 20%;
   left: 60%;
@@ -272,37 +274,37 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 }
 
 .sidebar-navigation ul {
+  color:#33ccff;
+  margin-top:20px;
   margin-left: 45px;
   list-style: none;
   padding: 0;
 }
 .sidebar-navigation li{
+  margin-left:15px;
+  margin-top:10px;
   padding: 10px 0;
 }
 
-.sidebar-navigation li .end{
-  margin-top:600px;
-  color:white;
-}
 .sidebar-navigation span{
   display: inline-block;
   position:relative;
 }
+
 .sidebar-navigation nav a{
   display: inline-block;
-  color: #fff;
   margin-top: 5px;
   text-decoration: none!important;
   font-size: 15px;
   letter-spacing: 0.5px;
   text-transform: capitalize;
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-family: Arial Rounded MT Bold;
 }
 
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../assets/img/pls2.png");
-  height: 32%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../assets/img/download.png");
+  height: 25%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
