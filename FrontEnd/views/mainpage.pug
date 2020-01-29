@@ -14,7 +14,7 @@ block content
                   span.glyphicon.glyphicon-user
                   |                             Perfil
               li
-                a(href='#projects')
+                a(href='/allFriends')
                   span.glyphicon.glyphicon-heart
                   |                             Amigos
             p.span App
@@ -30,12 +30,12 @@ block content
                     |                             Quem somos?         
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -47,15 +47,16 @@ block content
     .hero-image
       ul.nav.navbar-nav.navbar-right
         li
-          a
-            span.glyphicon.glyphicon-inbox
-              |  Mensagens
+          a(href='/logout')
+            span.glyphicon.glyphicon-off
+            |  logout
         li
-          a(href='#')
-            .avatar  Avatar
+            .avatar.rounded-circle
+               img(src='/ficheiros/' + user.foto)
 
     .titulo
-        h2 Mr. Book
+        h2 Página Inicial
 
     .page-content
-        p
+      p
+        img(src="assets/img/bv.png" width="100%")

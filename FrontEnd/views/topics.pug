@@ -32,12 +32,12 @@ block content
                     |                             Quem somos?
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -49,12 +49,12 @@ block content
   .hero-image
     ul.nav.navbar-nav.navbar-right
       li
-        a
-          span.glyphicon.glyphicon-inbox
-          |  Mensagens
+        a(href='/logout')
+          span.glyphicon.glyphicon-off
+          |  logout
       li
-        a(href='#')
-          .avatar  Avatar
+          .avatar.rounded-circle
+             img(src='/ficheiros/' + user.foto)
 
   .titulo
         h2= group.name
@@ -85,7 +85,7 @@ block content
                       .col-auto
                         .row
                           .col-sm-4
-                            form(action=('http://localhost:5004/groups/' + group._id + '/topic/' + e._id + '?nmT=' + e.name) method="GET")
+                            form(action=('http://localhost:5004/groups/' + group._id + '/topic/' + e._id) method="GET")
                               button.btn.btn-sm.btn-primary(type='submit') Ver
                           .col-sm-1
                             if(group.admins.includes(user._id))
@@ -129,17 +129,32 @@ block content
                                           .row
                                             .col-sm-5
                                             .col-sm-2
-                                              form(action=('http://localhost:5004/groups/'+group._id+'/members' ) method="GET") 
+                                              form(action=('http://localhost:5004/checkProfile/' + u._id ) method="GET") 
                                                 button.btn.btn-icon.btn-primary(type='submit')
                                                   span.btn-inner--icon
                                                     i.ni.ni-single-02
 
                                             .col-sm-2
-                                              if(group.admins.includes(user._id))
+                                              if(group.owner==user._id)
                                                 form(action=('http://localhost:5004/removeMember/'+group._id+'/membro/' + u._id ) method="POST")
                                                   button.btn.btn-icon.btn-primary(type='submit')
                                                     span.btn-inner--icon
                                                       i.ni.ni-scissors
+
+                                              else
+                                                if(user._id==u._id)
+                                                  form(action=('http://localhost:5004/removeMember/'+group._id+'/membro/' + u._id ) method="POST")
+                                                      button.btn.btn-icon.btn-primary(type='submit')
+                                                        span.btn-inner--icon
+                                                          i.ni.ni-scissors 
+                                                else 
+                                                  if(group.admins.includes(user._id))
+                                                    if(!group.admins.includes(u._id))
+                                                      form(action=('http://localhost:5004/removeMember/'+group._id+'/membro/' + u._id ) method="POST")
+                                                        button.btn.btn-icon.btn-primary(type='submit')
+                                                          span.btn-inner--icon
+                                                            i.ni.ni-scissors
+                                                
 
                                             .col-sm-2
                                               if(group.owner==user._id)
@@ -223,26 +238,27 @@ block content
 
     br
 
-    button.btn.btn-success(type='button' data-toggle='modal' data-target='#topico') Novo Tópico
+    if(group.users.includes(user._id))
+      button.btn.btn-success(type='button' data-toggle='modal' data-target='#topico') Novo Tópico
 
-    // Modal
-    #topico.modal.fade(tabindex='-1' role='dialog' aria-labelledby='topicoLabel' aria-hidden='true')
-      .modal-dialog.modal-dialog-centered(role='document')
-        .modal-content
-          .modal-header
-            h5#topico.modal-title Dados do Tópico a Criar
-            button.close(type='button' data-dismiss='modal' aria-label='Close')
-              span(aria-hidden='true') &times;
-          .modal-body
-              form.w3-container(action=("/criaTopico/" + group._id ) method="POST")
-                
-                input.form-control(type='text' name="title" required="" placeholder="Titulo do Novo Tópico" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
-                br
-                button.btn.btn-success(type='submit') Criar
+      // Modal
+      #topico.modal.fade(tabindex='-1' role='dialog' aria-labelledby='topicoLabel' aria-hidden='true')
+        .modal-dialog.modal-dialog-centered(role='document')
+          .modal-content
+            .modal-header
+              h5#topico.modal-title Dados do Tópico a Criar
+              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') &times;
+            .modal-body
+                form.w3-container(action=("/criaTopico/" + group._id ) method="POST")
+
+                  input.form-control(type='text' name="title" required="" placeholder="Titulo do Novo Tópico" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
+                  br
+                  button.btn.btn-success(type='submit') Criar
 
 
-          .modal-footer
-            button.btn.btn-success(type='button' data-dismiss='modal') Cancelar    
+            .modal-footer
+              button.btn.btn-success(type='button' data-dismiss='modal') Cancelar    
             
       
 

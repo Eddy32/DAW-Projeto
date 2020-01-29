@@ -17,6 +17,7 @@ var usersSchema = new mongoose.Schema({
 
 
   usersSchema.pre("save",function(next) {
+    console.log("GENDER::::: " + this.gender)
     if(this.gender == "female")
       this.foto = "female.png"
     next();

@@ -32,12 +32,12 @@ block content
                     |                             Quem somos?
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -48,16 +48,18 @@ block content
 
     .hero-image
       ul.nav.navbar-nav.navbar-right
-        li
-          a
-            span.glyphicon.glyphicon-inbox
-              |  Mensagens
-        li
-          a(href='#')
-            .avatar  Avatar
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='/logout')
+              span.glyphicon.glyphicon-off
+              |  logout
+          li
+              .avatar.rounded-circle
+                 img(src='/ficheiros/' + user.foto)
+
 
     .titulo
-        h2 Mr. Book
+        h2 Editar Perfil
 
 
         .containerProfile
@@ -72,7 +74,7 @@ block content
                           input.w3-input.w3-cell(type="file" name="foto")
                           button.btn(type='submit' )
                             i.fa.fa-share
-                            |  Publicar
+                            |  Alterar
 
                 .col-md-9.personal-info
                     .alert.alert-info.alert-dismissable
@@ -80,22 +82,22 @@ block content
                         i.fa.fa-coffee
                         |           Confirme todas as suas alterações antes de guardar!
                     h3 Personal info
-                    form.form-horizontal(role='form')
+                    form.form-horizontal(action=("/users/" + user._id + "/updateInfos") method="POST" role='form' )
                         .form-group
                             label.col-lg-3.control-label Email:
                             .col-lg-8
-                                input.form-control(type='text' value=user.email placeholder="email")
+                                input.form-control(type='text' name="email" value=user.email placeholder="email")
                         .form-group
                             label.col-md-3.control-label Username:
                             .col-md-8
-                                input.form-control(type='text' value=user.name)
+                                input.form-control(type='text' name="name" value=user.name)
                         .form-group
-                            label.col-md-3.control-label Password:
+                            label.col-md-3.control-label Biografia:
                             .col-md-8
-                                input.form-control(type='password' value=user.password)
+                                input.form-control(type='text' name="biografia" value=user.bio)
                         .form-group
                             label.col-md-3.control-label
                             .col-md-8
-                                input.btn.btn-primary(type='button' value='Save Changes')
+                                input.btn.btn-primary(type='submit' value='Save Changes')
                                 span
                                 input.btn.btn-default(type='reset' value='Cancel')

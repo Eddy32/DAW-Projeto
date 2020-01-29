@@ -31,12 +31,12 @@ block content
                     |                             Quem somos?
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -47,16 +47,18 @@ block content
 
     .hero-image
       ul.nav.navbar-nav.navbar-right
-        li
-          a
-            span.glyphicon.glyphicon-inbox
-              |  Mensagens
-        li
-          a(href='#')
-            .avatar  Avatar
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='/logout')
+              span.glyphicon.glyphicon-off
+              |  logout
+          li
+              .avatar.rounded-circle
+                 img(src='/ficheiros/' + user.foto)
+
 
     .titulo
-        h2 Mr. Book
+        h2 Perfil de: #{utilizador.name}
 
         
     .page-content
@@ -71,12 +73,11 @@ block content
                                 img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
             .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4
                 .d-flex.justify-content-between
-                
-                    a.btn.btn-sm.btn-info.mr-4(href='http://localhost:5004/users/'+user._id+'/editProfile') Editar perfil
-                    form(action=('http://localhost:5004/user/' + utilizador._id + '/addRequest?member=' + user._id) method="POST")
-                            button.btn.btn-icon.btn-primary(type='submit')
-                              span.btn-inner--icon
-                                i.ni.ni-favourite-28  
+
+                    if(!user.friends.includes(utilizador._id))
+                      form(action=('http://localhost:5004/user/' + utilizador._id + '/addRequest?member=' + user._id) method="POST")
+                              button.btn.btn-icon.btn-primary(type='submit')
+                                span.glyphicon.glyphicon-heart 
 
                     
             .card-body.pt-0
@@ -84,13 +85,15 @@ block content
                     .col
                         .card-profile-stats.d-flex.justify-content-center
                             div
-                                span.heading=user.friends.length
+                                br
+                                span.heading=utilizador.friends.length
                                 span.description Amigos
                             div
-                                span.heading=nrGrupos
+                                br
+                                span.heading=nr
                                 span.description Grupos
                 .text-center
-                    h5.h3=user.name
+                    h5.h3=utilizador.name
                         span.font-weight-light=user.dateBirth
                     .h5
                         i.ni.location_pin.mr-2=user.bio

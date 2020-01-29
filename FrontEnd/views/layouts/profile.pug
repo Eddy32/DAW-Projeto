@@ -31,12 +31,12 @@ block content
                     |                             Quem somos?
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -46,17 +46,17 @@ block content
                     |                             Logout        
 
     .hero-image
-      ul.nav.navbar-nav.navbar-right
-        li
-          a
-            span.glyphicon.glyphicon-inbox
-              |  Mensagens
-        li
-          a(href='#')
-            .avatar  Avatar
+     ul.nav.navbar-nav.navbar-right
+      li
+        a(href='/logout')
+          span.glyphicon.glyphicon-off
+          |  logout
+      li
+          .avatar.rounded-circle
+             img(src='/ficheiros/' + user.foto)
 
     .titulo
-        h2 Mr. Book
+        h2 Perfil
 
         
     .page-content
@@ -67,7 +67,7 @@ block content
                     .card-profile-image
                         a(href='/profile/'+user._id)
                             if (foto!="")
-                                img.rounded-circle(src=user.foto)
+                                img.rounded-circle(src= '/ficheiros/' + user.foto)
                             else
                                 img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
             .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4

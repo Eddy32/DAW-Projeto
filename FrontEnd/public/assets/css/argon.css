@@ -198,6 +198,10 @@
       .site-section-heading {
         font-size: 3rem; } }
 
+    .page-content .containerCredits{
+            background-image: url(https://i.ibb.co/1JhgB3M/tea2.png);
+            background-size: cover;
+        }
     .teacher {
             border: 1px solid #339966;
             padding: 30px;
@@ -205,8 +209,8 @@
             .teacher img {
               position: relative;
               margin-top: -100px;
-              width: 170px;
-              height: 270px; }
+              width: 160px;
+              height: 110px; }
             .teacher h3 {
               font-size: 1.2rem; }
             .teacher .position {

@@ -71,13 +71,19 @@ block content
                               .pull-left.image
                               .pull-left.meta
                                 .title.h5
-                                  a(href='#')
-                                  |                         publicou algo.
+                                  each membro in utili
+                                    if (membro._id==post.owner)
+                                      img.img-circle.avatar-sm(src='/ficheiros/'+membro.foto alt='user profile image')
+                                      a(href='#')
+                                      | #{membro.name}
                                 h6.text-muted.time= ("" + new Date(parseInt(post.date))).split('GMT')[0]
                             .post-description
                               h4 Titulo: #{post.title}
+                              
 
                               p=post.text
+                              form.w3-container(action=("/groups/" + post.idGroup + '/topic/' + post.idTopic ) method="GET")
+                                          button.btn.btn-success(type='submit') Ver post   
                               .stats
                                 .row
                               

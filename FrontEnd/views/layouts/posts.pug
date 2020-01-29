@@ -31,12 +31,12 @@ block content
                     |                             Quem somos?
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -48,31 +48,34 @@ block content
     .hero-image
       ul.nav.navbar-nav.navbar-right
         li
-          a
-            span.glyphicon.glyphicon-inbox
-              |  Mensagens
+          a(href='/logout')
+            span.glyphicon.glyphicon-off
+            |  logout
         li
-          a(href='#')
-            .avatar  Avatar
+            .avatar.rounded-circle
+               img(src='/ficheiros/' + user.foto)
 
     .titulo
-        h2=nameTopico
+        h2= nameTopico
 
 
     //- VERDADEIRO CODIGO COMEÇA AQUI
     .page-content
         .row
-          .col-md-6
-            .widget-area.no-padding.blank
-              .status-upload
-                form(action=("/addPost?idT=" + idT + '&idG=' + idG) method="POST" enctype="multipart/form-data" )
-                  input.form-control(type='text' name="title" required="" placeholder="Título" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
-                  textarea(placeholder='What are you thinking?' name="text" type="text" required="")
-                  input.form-control(type='text' name="hashtag" placeholder="Hashtags" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
-                  button.btn(type='submit' )
-                    i.fa.fa-share
-                    |  Publicar
-                  input.w3-input.w3-cell(type="file" name="ficheiro")
+           each mem in members
+            if (mem._id == user._id)
+              .col-md-6
+
+                .widget-area.no-padding.blank
+                  .status-upload
+                    form(action=("/addPost?idT=" + idT + '&idG=' + idG) method="POST" enctype="multipart/form-data" )
+                      input.form-control(type='text' name="title" required="" placeholder="Título" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
+                      textarea(placeholder='What are you thinking?' name="text" type="text" required="")
+                      input.form-control(type='text' name="hashtag" placeholder="Hashtags" aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default')
+                      button.btn(type='submit' )
+                        i.fa.fa-share
+                        |  Publicar
+                      input.w3-input.w3-cell(type="file" name="ficheiro")
 
         .containerPosts
           .col-sm-8
@@ -95,6 +98,9 @@ block content
                     h4=post.title
 
                     p=post.text
+                    each tag in post.hashtag
+                        b # #{tag}
+                  
                     .stats
                       .row
                         .col-sm-1
@@ -112,13 +118,16 @@ block content
                               .modal-dialog.modal-dialog-centered(role='document')
                                 .modal-content
                                   .modal-header
-                                    h5#exampleModalLabel.modal-title Dados do Grupo a Criar
+                                    h5#exampleModalLabel.modal-title Anexo do Post
                                     button.close(type='button' data-dismiss='modal' aria-label='Close')
                                       span(aria-hidden='true') &times;
                                   .modal-body
-                                       img.card-img-top(src='/ficheiros/' + post.ficheiroName alt='Card image cap')    
+                                       img.card-img-top(src='/ficheiros/' + post.ficheiroName alt='Card image cap')
+                                        
 
                                   .modal-footer
+                                    form.w3-container(action=("/download/" + post.ficheiroName ) method="GET")
+                                          button.btn.btn-success(type='submit') Download   
                                     button.btn.btn-success(type='button' data-dismiss='modal') Cancelar
                                               
 
@@ -143,6 +152,7 @@ block content
                           .comment-heading
                             each mem in members
                               if(mem._id==comment.owner)
-                                h7.user=mem.name
+                                a(href='/checkProfile/' + mem._id)
+                                  b=mem.name
                                 h6.time=  ("" + new Date(parseInt(comment.date))).split('GMT')[0]
                           p Comentário: #{comment.text}

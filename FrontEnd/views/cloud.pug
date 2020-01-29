@@ -10,28 +10,21 @@ head
     margin: 0;
     padding: 0;
     }
+body
+    
+
+
+
 #container
     script.
-        anychart.onDocumentReady(function() {
-            var data = [
-                {"hashtag": "Mandarin chinese", "value": 1},
-                {"hashtag": "English", "value": 9},
-                {"hashtag": "Hindustani", "value": 5},
-                {"hashtag": "Spanish", "value": 5},
-                {"hashtag": "Arabic", "value": 4},
-                {"hashtag": "Malay", "value": 24},
-                {"hashtag": "Russian", "value": 20},
-                {"hashtag": "Bengali", "value": 6},
-                {"hashtag": "Portuguese", "value": 9},
-                {"hashtag": "French", "value": 22},
-                {"hashtag": "Hausa", "value": 5, },
-                {"hashtag": "Punjabi", "value": 18, },
-                {"hashtag": "Japanese", "value": 2, },
-                {"hashtag": "German", "value": 1, },
-                {"hashtag": "Persian", "value": 12, }
-            ];
+        dado="#{lezgo}";
 
-            var chart = anychart.tagCloud(data);
+        anychart.onDocumentReady(function() {
+
+            console.log("DADOS: " + JSON.parse(dado))
+
+
+            var chart = anychart.tagCloud(JSON.parse(dado));
 
             chart.title('Tags')
 

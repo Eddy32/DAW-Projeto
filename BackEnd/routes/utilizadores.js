@@ -10,6 +10,18 @@ router.get('/', passport.authenticate('jwt', {session: false}), function(req, re
     .catch(e => res.status(500).jsonp(e))
 });
 
+router.get('/allUsers', function(req, res) {
+  Utilizadores.listar()
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+});
+
+router.get('/:id/friends', function(req, res) {
+  Utilizadores.getFriends(req.params.id)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+});
+
 router.get('/multiple', function(req, res) {
   var arr = req.query.array.split(',');
   /*console.log("ENTREI AQUI WTF2")
@@ -77,6 +89,16 @@ router.post('/:id/denyRequest',function(req,res){
 
 });
 
+//change infos
+router.post('/changeInfo/:id',function(req,res){
+  var idName = req.query.name
+  var idMail = req.query.mail
+  var idBio = req.query.bio
+  Utilizadores.updateInfo(req.params.id,idName,idMail,idBio)
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+
+});
 
 
 router.post('/', function(req,res){

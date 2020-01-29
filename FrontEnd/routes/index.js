@@ -61,11 +61,13 @@ router.get('/groups', verificaAutenticacao, function(req, res) {
 });
 
 router.get('/credits', verificaAutenticacao, function(req, res) {
-  res.render('layouts/credits')
+  res.render('layouts/credits',{user: req.user})
 });
 
 router.get('/profile', function(req, res){
-  res.render('layouts/profile', {user: req.user, nrGrupos:"4"}); //mudar o nrGrupos
+  axios.get('http://localhost:5003/groups/fromUser/'+ req.user._id)
+  .then(dados => res.render('layouts/profile', {user: req.user, nrGrupos: dados.data.length}))
+
   /*
   axios.get('http://localhost:5003/user/'+req.params.id)
        .then(dados => res.render('layouts/profile', {nome: "Inês", dataAniv:"2 de nov", foto:"", nrFriends: "2", nrGrupos:"4", bio:"bio"}))
@@ -82,15 +84,47 @@ router.get('/users/:idU/editProfile', verificaAutenticacao, function(req, res){
 
 router.get('/checkProfile/:idU', verificaAutenticacao, function(req, res){
   axios.get('http://localhost:5003/utilizadores/byID/'+ req.params.idU)
-       .then(dados => res.render('verProfile', {user:req.user, utilizador: dados.data}))
+       .then(dados => {
+          axios.get('http://localhost:5003/groups/fromUser/'+ req.params.idU)
+            .then(grupos => res.render('verProfile', {user:req.user, utilizador: dados.data, nr: grupos.data.length })) 
+       }) 
    //acho que é preciso fazer um post para isto
+})
+
+router.get('/allUsers', verificaAutenticacao, function(req, res){
+  axios.get('http://localhost:5003/utilizadores/allUsers')
+       .then(dados => res.render('allUsers', {user: req.user,lista: dados.data}))
+})
+
+router.get('/allFriends', verificaAutenticacao, function(req, res){
+  if(req.user.friends.length>0){
+  axios.get('http://localhost:5003/utilizadores/'+ req.user._id +'/friends')
+    .then(amigos => {
+      axios.get('http://localhost:5003/utilizadores/multiple?array='+ amigos.data.friends)
+        .then(membros => {
+          res.render('allFriends', { user: req.user, lista: membros.data })
+        })
+        .catch(erro => {
+          res.render('error',{error: erro})
+        })
+    })
+    .catch(erro => {
+      res.render('error',{error: erro})
+    })
+  }
+  else res.render('allFriends', { user: req.user, lista: [] })
+
 })
 
 
 
 router.get('/hashtag', verificaAutenticacao, function(req, res){
   axios.get('http://localhost:5003/posts/countHashtags')
-       .then(dados => res.render('cloud', {tags: dados.data}))
+       .then(dados => {
+          //var tags = JSON.stringify(dados.data);
+          //console.log(tags)
+          res.render('hastag', {lezgo: dados.data}) 
+      })
 })
 
 
@@ -121,7 +155,7 @@ res.redirect('/login')
 })
 
 router.get('/feed',verificaAutenticacao, function(req,res){
-  res.render('mainpage')
+  res.render('mainpage', {user: req.user})
 })
 
 /////Grupos
@@ -256,14 +290,13 @@ router.get('/groups2/:id', function(req, res){
 
 
 router.get('/groups/:idG/topic/:idT',verificaAutenticacao, function(req, res){
-   var nameTopic = req.query.nmT;
    axios.get('http://localhost:5003/posts/byTopic/' + req.params.idT )
         .then(topics => {
           axios.get('http://localhost:5003/groups/'+ req.params.idG)
             .then(dados => {
               axios.get('http://localhost:5003/utilizadores/multiple?array='+ dados.data.users)
                 .then(membros => {
-                  res.render('layouts/posts', {lista: topics.data, idG:req.params.idG, nameTopico: nameTopic, idT: req.params.idT,user:req.user, members: membros.data })
+                  res.render('layouts/posts', {lista: topics.data, idG:req.params.idG, idT: req.params.idT,user:req.user, members: membros.data })
                 })
                 .catch(erro => {
                   res.render('error',{error: erro})
@@ -291,6 +324,10 @@ router.get('/user/:id/viewRequests', verificaAutenticacao, function(req, res){
 
 })
 
+router.get('/download/:fnome',verificaAutenticacao, function(req, res){
+  res.download( __dirname + '/../public/ficheiros/' + req.params.fnome )
+})
+
 
 router.get('/addPost', verificaAutenticacao, function(req, res){
   res.render('layouts/createPost')
@@ -309,26 +346,37 @@ router.post('/login', passport.authenticate('local',
 
 //registar utilizador
 router.post('/reg', function(req,res){
+  console.log("GENDER:::: ")
 var hash = bcrypt.hashSync(req.body.password, 10);
+console.log("GENDER:::: " + req.body.gender)
 axios.post('http://localhost:5003/utilizadores', {
  
   email: req.body.email,
   name: req.body.name,
+  gender: req.body.gender,
   password: hash
 })
   .then(dados => res.redirect('/'))
   .catch(e => res.render('error', {error: e}))
 })
 
+
+
+
 //get Hashtags
 router.post('/getPostsHashtag', function(req,res){
   var hashtg = req.body.hashtg;
-
+  console.log(" SADKBSAHKDSA" + hashtg);
   axios.get('http://localhost:5003/groups/fromUser/'+ req.user._id)
     .then(groups => {
       axios.get('http://localhost:5003/posts/byHashtag?hashtag='+ hashtg)
         .then(posts => {
-          res.render('showPostsHashtag', { grupos: groups.data, postes: posts.data })
+
+          axios.get('http://localhost:5003/utilizadores/allUsers')
+            .then(ut => {
+              res.render('showPostsHashtag', { grupos: groups.data, postes: posts.data, utili: ut.data })
+            })
+         
         })
         .catch(erro => {
           res.render('error',{error: erro})
@@ -364,6 +412,13 @@ router.post('/user/:idU/denyMember', function(req,res){
   })
 
 
+//update infos
+router.post('/users/:idU/updateInfos', function(req,res){
+    axios.post('http://localhost:5003/utilizadores/changeInfo/' + req.params.idU + '?name=' + req.body.name + '&mail=' + req.body.email + '&bio=' + req.body.biografia )
+      .then(dados => res.redirect('/profile/' ))
+      .catch(e => res.render('error', {error: e}))
+})
+  
 
 ////Grupos
 //remover um user de um grupo

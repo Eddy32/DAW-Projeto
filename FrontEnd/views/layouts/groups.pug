@@ -31,12 +31,12 @@ block content
                     |                             Quem somos?
 
                 li
-                  a(href='/')
+                  a(href='/allUsers')
                     span.fa.fa-users
                     |                             Utilizadores
                 
                 li
-                  a(href='/')
+                  a(href='/hashtag')
                     span.fa.fa-hashtag
                     |                             Hashtags
                 
@@ -48,12 +48,12 @@ block content
   .hero-image
     ul.nav.navbar-nav.navbar-right
       li
-        a
-          span.glyphicon.glyphicon-inbox
-          |  Mensagens
+        a(href='/logout')
+          span.glyphicon.glyphicon-off
+          |  logout
       li
-        a(href='#')
-          .avatar  Avatar
+          .avatar.rounded-circle
+             img(src='/ficheiros/' + user.foto)
 
   .titulo
     h2 Grupos
@@ -136,14 +136,14 @@ block content
                       else 
                         badge.badge-pill.badge-success Público
                     if(grupo.pendent.includes(user._id))
-                      span.btn-inner--icon
-                        i.ni.ni-send
+                      span.glyphicon.glyphicon-send
                     p.card-text
                       | Descrição: #{grupo.bio}
                     p.card-text
                       small.text-muted Membros: #{grupo.users.length}
                     form(action=('http://localhost:5004/groups/' + grupo._id + '/request?member=' + user._id ) method="POST")
                       button.btn.btn-success(type='submit') Pedir
+                    
 
     .row
                 .col-sm-6

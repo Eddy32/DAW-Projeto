@@ -25,6 +25,12 @@ module.exports.consultarVarios = arrayID => {
       });
 }
 
+module.exports.getFriends = id => {
+    return Utilizador
+        .findOne({_id: id},{_id:0,friends:1})
+        .exec()
+}
+
 module.exports.consultarID = id => {
     return Utilizador
         .findOne({_id: id})
@@ -32,6 +38,16 @@ module.exports.consultarID = id => {
 }
 
 //------------------PUT'S
+
+module.exports.updateInfo = (idU,nome,mail,desc) => {
+    return Utilizador.update(
+        { _id: idU },
+        {$set: 
+            {name:nome,email:mail,bio:desc}
+        }
+      )
+      .exec()
+}
 
 module.exports.addFriendRequest = (idU,idA) => {
     return Utilizador.update(

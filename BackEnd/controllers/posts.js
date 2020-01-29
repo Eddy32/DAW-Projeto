@@ -82,10 +82,10 @@ module.exports.countHashtags = hashtg => {
             },
             {
               "$group": {
-                "_id": "$hashtag",
                 "value": {
                   "$sum": 1
-                }
+                },
+                "_id": "$hashtag"
               }
             },
             {
@@ -93,6 +93,7 @@ module.exports.countHashtags = hashtg => {
                 "_id": 0,
                 "value": 1,
                 "x": "$_id"
+  
                 
               }
             }
