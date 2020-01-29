@@ -56,7 +56,7 @@ block content
             .avatar  Avatar
 
     .titulo
-        h2 Mr. Book
+        h2=nameTopico
 
 
     //- VERDADEIRO CODIGO COMEÇA AQUI
@@ -86,9 +86,9 @@ block content
                           img.img-circle.avatar(src='/ficheiros/'+mem.foto alt='user profile image')
                     .pull-left.meta
                       .title.h2GOD
-                        a(href='#')
-                          each mem in members
-                            if(mem._id==post.owner)
+                        each mem in members
+                          if(mem._id==post.owner)
+                            a(href='/checkProfile/' + mem._id)
                              b=mem.name
                       h6.text-muted.time= ("" + new Date(parseInt(post.date))).split('GMT')[0]
                   .post-description
@@ -126,7 +126,7 @@ block content
                   .post-footer
                     form(action=("/addComent?idP=" + post._id + '&idG=' +idG + '&idT=' + idT ) method="POST")
                       .input-group.mb-3
-                        input.form-control(type='text' placeholder="Add comment..." aria-label="Recipient's username" aria-describedby='button-addon2')
+                        input.form-control(type='text' name="texto" placeholder="Add comment..." aria-label="Recipient's username" aria-describedby='button-addon2')
                       .input-group-append
                         button.button-addon.btn.btn-outline-primary(type='submit' onClick="location.reload(true)")
                           span.btn-inner--icon
@@ -136,9 +136,13 @@ block content
                     ul.comments-list
                       li.comment
                         a.pull-left(href='#')
-                          img.avatar(src="/ficheiros/"+user.foto alt='avatar')
+                          each mem in members
+                              if(mem._id==comment.owner)
+                                img.avatar(src= "/ficheiros/" + mem.foto alt='avatar')
                         .comment-body
                           .comment-heading
-                            h4.user=comment.owner
-                            h5.time=comment.date
-                          p=comment.text
+                            each mem in members
+                              if(mem._id==comment.owner)
+                                h7.user=mem.name
+                                h6.time=  ("" + new Date(parseInt(comment.date))).split('GMT')[0]
+                          p Comentário: #{comment.text}

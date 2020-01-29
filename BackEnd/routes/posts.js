@@ -17,6 +17,13 @@ router.get('/', function(req, res) {
   } 
 });
 
+//conta hashtags
+router.get('/countHashtags', function(req,res){
+  Posts.countHashtags()
+    .then(dados => res.jsonp(dados))
+    .catch(e => res.status(500).jsonp(e))
+})
+
 //post with hashtag
 router.get('/byHashtag', function(req,res){
   var hashtg = req.query.hashtag;

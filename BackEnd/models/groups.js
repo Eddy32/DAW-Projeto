@@ -20,7 +20,7 @@ var groupsSchema = new mongoose.Schema({
     console.log("DATA: " + this.date)
     if(!this.bio){
       const words = (""+ new Date(parseInt(this.date))).split(' GMT');
-      this.bio = "Novo Grupo! Criado em: " + words[0];
+      this.bio = "Criado em: " + words[0];
     }
     next();
   });

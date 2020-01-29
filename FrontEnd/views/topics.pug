@@ -1,5 +1,6 @@
 extends layout
 
+
 block content
   .sidebar-navigation
           p.span Personal
@@ -14,33 +15,49 @@ block content
                   span.glyphicon.glyphicon-user
                   |                             Perfil
               li
-                a(href='/groups')
-                  span.glyphicon.glyphicon-th-large
-                  |                             Grupos
+                a(href='#projects')
+                  span.glyphicon.glyphicon-heart
+                  |                             Amigos
             p.span App
               ul
+                
                 li
-                    a(href='#projects')
-                        span.glyphicon.glyphicon-heart
-                        |                             Amigos
+                  a(href='/groups')
+                    span.glyphicon.glyphicon-th-large
+                    |                             Grupos
 
                 li
-                    a(href='#blog')
-                        span.glyphicon.glyphicon-question-sign
-                        |                             Quem somos?
+                  a(href='/credits')
+                    span.glyphicon.glyphicon-question-sign
+                    |                             Quem somos?
+
+                li
+                  a(href='/')
+                    span.fa.fa-users
+                    |                             Utilizadores
+                
+                li
+                  a(href='/')
+                    span.fa.fa-hashtag
+                    |                             Hashtags
+                
+                li
+                  a(href='/logout')
+                    span.glyphicon.glyphicon-off
+                    |                             Logout        
+
   .hero-image
-      ul.nav.navbar-nav.navbar-right
-        li
-          a(src='assets/vendor/nucleo/fonts/ic_inbox_24px.svg')
-            span.glyphicon.glyphicon-user
-              |  Avatar
-        li
-          a(href='#')
-            span.glyphicon.glyphicon-log-in
-              |  Login
+    ul.nav.navbar-nav.navbar-right
+      li
+        a
+          span.glyphicon.glyphicon-inbox
+          |  Mensagens
+      li
+        a(href='#')
+          .avatar  Avatar
 
   .titulo
-        h2 amaze me pls
+        h2= group.name
 
   ////////////PAGINA EM SI      
   .page-content
@@ -54,16 +71,17 @@ block content
                         // Avatar
                         each mem in members
                             if(mem._id==e.creator)
-                                a.avatar.rounded-circle(href='#')
-                                  img(alt='Image placeholder' src='/ficheiros/'+mem.foto)
+                              a.avatar.rounded-circle(href='#')
+                                img(alt='Image placeholder' src='/ficheiros/' + mem.foto)
                       .col.ml--2
                         h4.mb-0
                           | Titulo: #{e.title} 
-                        h5.mt-3.mb-1
-                          | Criador: 
-                          each mem in members
+                        each mem in members
                             if(mem._id==e.creator)
-                              a(href='/feed') #{mem.name}
+                              h5.mt-3.mb-1
+                                | Criador: 
+                                a(href='/checkProfile/' + mem._id)=mem.name
+                          
                       .col-auto
                         .row
                           .col-sm-4

@@ -73,7 +73,32 @@ module.exports.withHashtag = hashtg => {
         .exec()
 }
 
-
+//conta hashtags
+module.exports.countHashtags = hashtg => {
+    return Post
+        .aggregate([
+            {
+              "$unwind": "$hashtag"
+            },
+            {
+              "$group": {
+                "_id": "$hashtag",
+                "value": {
+                  "$sum": 1
+                }
+              }
+            },
+            {
+              "$project": {
+                "_id": 0,
+                "value": 1,
+                "x": "$_id"
+                
+              }
+            }
+          ])
+        .exec()
+}
 
 
 //remove Comment
