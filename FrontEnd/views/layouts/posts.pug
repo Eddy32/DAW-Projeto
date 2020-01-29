@@ -99,7 +99,7 @@ block content
                       .row
                         .col-sm-1
                           form(action=('http://localhost:5004/groups/' + idG + '/topics/' + idT + '/likePost/' + post._id + '?user=' +  user._id ) method="POST")
-                            button.btn.btn-icon.btn-primary(type='submit')
+                            button.btn.btn-icon.btn-primary(type='submit' onClick="location.reload(true)")
                               span.btn-inner--icon
                                 i.ni.ni-favourite-28  #{post.NumLikes}
                         .col-sm-1
@@ -128,7 +128,7 @@ block content
                       .input-group.mb-3
                         input.form-control(type='text' placeholder="Add comment..." aria-label="Recipient's username" aria-describedby='button-addon2')
                       .input-group-append
-                        button.button-addon.btn.btn-outline-primary(type='submit')
+                        button.button-addon.btn.btn-outline-primary(type='submit' onClick="location.reload(true)")
                           span.btn-inner--icon
                             i.fa.fa-edit
 
@@ -136,7 +136,7 @@ block content
                     ul.comments-list
                       li.comment
                         a.pull-left(href='#')
-                          img.avatar(src=comment.imagem alt='avatar')
+                          img.avatar(src="/ficheiros/"+user.foto alt='avatar')
                         .comment-body
                           .comment-heading
                             h4.user=comment.owner

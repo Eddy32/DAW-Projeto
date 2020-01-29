@@ -63,7 +63,30 @@ block content
         if(lista.length > 0)
                 .table-responsive
                     div
-                    table.table.align-items-center.table-dark
+                      each p in lista
+                        li.list-group-item.px-0
+                          .row.align-items-center
+                            .col-auto
+                              a.avatar.rounded-circle(href='/checkProfile/'+p._id)
+                                img(src= '/ficheiros/' + p.foto) 
+                            .col.ml--2
+                              h4.mb-0
+                                a(href='#!')=p.name
+                              small=p.bio
+                            .col-auto
+                              form(action=('/user/' + user._id + '/acceptMember?member='+ p._id) method="POST")
+                                button.btn.btn-sm.btn-primary(type='submit') Add
+        else
+          .alert.alert-warning(role='alert')
+            span.alert-icon
+              i.fa.fa-sad-tear
+            span.alert-text
+              strong Atenção!
+              |  Não tem pedidos de amizade pedentes. 
+
+                      
+
+//- table.table.align-items-center.table-dark
                         thead.thead-dark
                             tr
                                 th.sort(scope='col' data-sort='budget') Name
@@ -89,5 +112,6 @@ block content
                                                 button.btn.btn-icon.btn-primary(type='submit')
                                                     span.btn-inner--icon
                                                     i.ni.ni-fat-remove
-        else
-            h Não tem novos pedidos de amizade
+                    ul.list-group.list-group-flush.list.my--3
+                            else
+                                h Não tem novos pedidos de amizade

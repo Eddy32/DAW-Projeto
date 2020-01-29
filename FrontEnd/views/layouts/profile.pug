@@ -65,9 +65,9 @@ block content
             .row.justify-content-center
                 .col-lg-3.order-lg-2
                     .card-profile-image
-                        a(href='/profile/'+user._id)
+                        a(href='/checkProfile/'+user._id)
                             if (foto!="")
-                                img.rounded-circle(src=user.foto)
+                                img.rounded-circle(src="/ficheiros/"+user.foto)
                             else
                                 img.rounded-circle(src='../../assets/img/theme/team-4.jpg')
             .card-header.text-center.border-0.pt-8.pt-md-4.pb-0.pb-md-4

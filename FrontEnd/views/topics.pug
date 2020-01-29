@@ -52,8 +52,10 @@ block content
                     .row.align-items-center
                       .col-auto
                         // Avatar
-                        a.avatar.rounded-circle(href='#')
-                          img(alt='Image placeholder' src='../../assets/img/theme/team-1.jpg')
+                        each mem in members
+                            if(mem._id==e.creator)
+                                a.avatar.rounded-circle(href='#')
+                                  img(alt='Image placeholder' src='/ficheiros/'+mem.foto)
                       .col.ml--2
                         h4.mb-0
                           | Titulo: #{e.title} 
